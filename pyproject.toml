@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "cclc_queue"
+version = "0.1.0"
+description = ""
+authors = ["HIDE <hide-management-l@mtu.edu>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.0.1"
+
+[tool.poetry.dev-dependencies]
+black = "^21.12b0"
+flake8 = "^4.0.1"
+flake8-bugbear = "^22.1.11"
+flake8-comprehensions = "^3.8.0"
+ipython = "^8.0.1"
+isort = "^5.10.1"
+pre-commit = "^2.17.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"

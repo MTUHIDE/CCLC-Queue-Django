@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 88
+extend-ignore =
+    E203, # Play nicely with Black
+    E501  # Black should handle line formatting for us
+extend-exclude =
+    ./manage.py,
+    **/migrations/
