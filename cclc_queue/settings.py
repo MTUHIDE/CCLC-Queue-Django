@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from os import environ
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "question_queue",
+    "social_django",
 ]
 
 MIDDLEWARE = [
@@ -63,6 +69,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -100,6 +108,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    "cclc_queue.auth.backends.canvas.CanvasOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+SOCIAL_AUTH_URL_NAMESPACE = "auth"
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = [
+    "username",
+    "email",
+    "fullname",
+    "first_name",
+    "last_name",
+]
+SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = "mtu.instructure.com"
+SOCIAL_AUTH_CANVAS_OAUTH2_KEY = environ.get("CANVAS_KEY", "")
+SOCIAL_AUTH_CANVAS_OAUTH2_SECRET = environ.get("CANVAS_SECRET", "")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
