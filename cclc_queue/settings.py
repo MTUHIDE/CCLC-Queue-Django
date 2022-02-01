@@ -121,9 +121,14 @@ SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = [
     "first_name",
     "last_name",
 ]
-SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = "mtu.instructure.com"
-SOCIAL_AUTH_CANVAS_OAUTH2_KEY = environ.get("CANVAS_KEY", "")
-SOCIAL_AUTH_CANVAS_OAUTH2_SECRET = environ.get("CANVAS_SECRET", "")
+
+if DEBUG:
+    SOCIAL_AUTH_CANVAS_BASE_URL = "mtu.beta.instructure.com"
+else:
+    SOCIAL_AUTH_CANVAS_BASE_URL = "mtu.instructure.com"
+
+SOCIAL_AUTH_CANVAS_KEY = environ.get("CANVAS_KEY", "")
+SOCIAL_AUTH_CANVAS_SECRET = environ.get("CANVAS_SECRET", "")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
