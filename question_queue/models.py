@@ -1,10 +1,16 @@
+from canvasapi import Canvas
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    @property
+    def canvas(self):
+        canvas_user = self.social_auth.get(provider="canvas-oauth2")
+        canvas_url = f"https://{settings.SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL}"
+        return Canvas(canvas_url, canvas_user.extra_data["access_token"])
 
 
 class CanvasCourse(models.Model):

@@ -20,7 +20,8 @@ def instructor(response):
     context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
 
+
 def coach(response):
-    template = loader.get_template('question_queue/coach.html')
-    context = {'question_queue': ''}
+    template = loader.get_template("question_queue/coach.html")
+    context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
