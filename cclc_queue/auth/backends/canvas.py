@@ -10,7 +10,7 @@ class CanvasOAuth2(BaseOAuth2):
     * https://canvas.instructure.com/doc/api/file.oauth_endpoints.html
     """
 
-    name = "canvas"
+    name = "canvas-oauth2"
     AUTHORIZATION_URL = "https://{base_url}/login/oauth2/auth"
     ACCESS_TOKEN_URL = "https://{base_url}/login/oauth2/token"
     ACCESS_TOKEN_METHOD = "POST"

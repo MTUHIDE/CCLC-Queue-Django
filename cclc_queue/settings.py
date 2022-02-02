@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from os import environ
 from pathlib import Path
 
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 ROOT_URLCONF = "cclc_queue.urls"
@@ -108,12 +110,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "question_queue.User"
+
 AUTHENTICATION_BACKENDS = (
     "cclc_queue.auth.backends.canvas.CanvasOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 )
 
+
 SOCIAL_AUTH_URL_NAMESPACE = "auth"
+
+LOGIN_URL = reverse_lazy(f"{SOCIAL_AUTH_URL_NAMESPACE}:begin", args=["canvas-oauth2"])
+
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = [
     "username",
     "email",
@@ -123,12 +131,13 @@ SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = [
 ]
 
 if DEBUG:
-    SOCIAL_AUTH_CANVAS_BASE_URL = "mtu.beta.instructure.com"
+    SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = "mtu.beta.instructure.com"
 else:
-    SOCIAL_AUTH_CANVAS_BASE_URL = "mtu.instructure.com"
+    SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = "mtu.instructure.com"
 
-SOCIAL_AUTH_CANVAS_KEY = environ.get("CANVAS_KEY", "")
-SOCIAL_AUTH_CANVAS_SECRET = environ.get("CANVAS_SECRET", "")
+SOCIAL_AUTH_CANVAS_OAUTH2_KEY = environ.get("CANVAS_KEY", "")
+
+SOCIAL_AUTH_CANVAS_OAUTH2_SECRET = environ.get("CANVAS_SECRET", "")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
