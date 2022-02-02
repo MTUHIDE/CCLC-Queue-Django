@@ -7,8 +7,6 @@ authors = ["HIDE <hide-management-l@mtu.edu>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "^4.0.1"
-python-dotenv = "^0.19.2"
-social-auth-app-django = "^5.0.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.12b0"
