@@ -1,0 +1,20 @@
+{{ index }}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block title %}<title>Index</title>{% endblock %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'question_queue/style.css' %}">
+    </head>
+    <body>
+        <h1>CCLC Queue Site Index</h1>
+        <ul>
+            <li><a href="http://127.0.0.1:8000/">Home</a></li>
+            <li><a href="http://127.0.0.1:8000/student/">Student View</a></li>
+            <li><a href="http://127.0.0.1:8000/instructor/">Instructor View</a></li>
+            <li><a href="http://127.0.0.1:8000/admin/">Admin View</a></li>
+        </ul>
+    </body>
+</html>
