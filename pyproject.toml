@@ -9,7 +9,7 @@ python = "^3.10"
 Django = "^4.0.1"
 
 [tool.poetry.dev-dependencies]
-black = "^21.12b0"
+black = "^22.1.0"
 flake8 = "^4.0.1"
 flake8-bugbear = "^22.1.11"
 flake8-comprehensions = "^3.8.0"
@@ -23,6 +23,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 target-version = ['py310']
+extend-exclude = '''
+/(
+    ^.*\/migrations\/.*
+)/
+'''
 
 [tool.isort]
 profile = "black"
