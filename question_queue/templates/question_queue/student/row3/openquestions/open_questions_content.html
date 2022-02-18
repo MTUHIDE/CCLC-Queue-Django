@@ -1,0 +1,18 @@
+<div class="panel-body" style="padding: 0 !important">
+    {% for question in openQuestions %}
+    <div
+        class="container-fluid bg-info border ${count % 2 == 0 ? 'border-light' : 'border-dark'} border-3"
+        style="background-color: ${count % 2 == 0 ? '#eee' : '#fff'};border: 3px solid ${count % 2 == 0 ? '#fff' : '#eee'} !important;border-radius: 5px;padding: 8px 3px 8px 3px !important;"
+    >
+        <div class="row" style="padding: 0 !important">
+            <div class="col-xs-1">
+                <!-- {{"#" + question.id + " " +
+                question.dateCreated.format("MM/dd/yyyy HH:mm")}} -->
+
+                {{question.id}}
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>

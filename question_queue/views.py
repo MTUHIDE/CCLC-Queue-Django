@@ -1,3 +1,4 @@
+from datetime import date
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
@@ -11,8 +12,10 @@ def index(response):
 
 
 def student(response):
-    template = loader.get_template('question_queue/student.html')
-    context = {'question_queue': ''}
+    template = loader.get_template('question_queue/student/student.html')
+    # context = {'question_queue': '', "hello": "world"}
+    context = {'question_queue': '', "hello": "world",
+               "openQuestions": {"1": {"id": "123"}, "2": {"id": 123}}}
     return HttpResponse(template.render(context, response))
 
 
