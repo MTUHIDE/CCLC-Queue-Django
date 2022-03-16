@@ -30,8 +30,8 @@ class Question(models.Model):
     course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     message = models.TextField()
-    created_at = models.DateTimeField()
-    last_updated = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
     in_person = models.BooleanField()
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.OneToOneField(
@@ -47,8 +47,8 @@ class Question(models.Model):
 class Reply(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     message = models.TextField()
-    created_at = models.DateTimeField()
-    last_updated = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
     replied_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
