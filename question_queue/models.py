@@ -23,7 +23,7 @@ class EnrolledIn(models.Model):
     course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = (("user_id", "course_id"),)
+        unique_together = (("user", "course"),)
 
 
 class Question(models.Model):
