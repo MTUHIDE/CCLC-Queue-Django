@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -53,3 +54,6 @@ class Reply(models.Model):
 
 class SupportedCourse(models.Model):
     course_code = models.CharField(max_length=6, primary_key=True)
+
+
+admin.site.register(SupportedCourse)
