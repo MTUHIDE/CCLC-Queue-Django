@@ -32,7 +32,7 @@ class Question(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
-    in_person = models.BooleanField()
+    in_person = models.BooleanField(default=False)
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.OneToOneField(
         "Reply",
