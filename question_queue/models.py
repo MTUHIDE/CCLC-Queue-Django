@@ -33,9 +33,14 @@ class Question(models.Model):
     last_updated = models.DateTimeField()
     in_person = models.BooleanField()
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    answer = models.ForeignKey(
-        "Reply", blank=True, null=True, default=None, on_delete=models.CASCADE
-    )  # Reply is a string as it is not defined yet
+    answer = models.OneToOneField(
+        "Reply",
+        blank=True,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
 
 
 class Reply(models.Model):
@@ -47,4 +52,4 @@ class Reply(models.Model):
 
 
 class SupportedCourse(models.Model):
-    course_code = models.CharField(6, primary_key=True)
+    course_code = models.CharField(max_length=6, primary_key=True)
