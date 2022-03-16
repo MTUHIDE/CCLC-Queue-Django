@@ -34,14 +34,6 @@ class Question(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     in_person = models.BooleanField(default=False)
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    answer = models.OneToOneField(
-        "Reply",
-        blank=True,
-        null=True,
-        default=None,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
 
 
 class Reply(models.Model):
@@ -50,6 +42,7 @@ class Reply(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     replied_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    answer = models.BooleanField(default=False)
 
 
 class SupportedCourse(models.Model):
