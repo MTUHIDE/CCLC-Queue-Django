@@ -1,3 +1,40 @@
-# from django.contrib import admin
+from django.contrib import admin
 
-# Register your models here.
+from question_queue.models import (
+    Assignment,
+    CanvasCourse,
+    EnrolledIn,
+    Question,
+    Reply,
+    SupportedCourse,
+)
+
+
+@admin.register(CanvasCourse)
+class CanvasCourseAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Assignment)
+class AssignmentAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(EnrolledIn)
+class EnrolledInAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    date_hierarchy = "created_at"
+
+
+@admin.register(Reply)
+class ReplyAdmin(admin.ModelAdmin):
+    date_hierarchy = "created_at"
+
+
+@admin.register(SupportedCourse)
+class SupportedCourseAdmin(admin.ModelAdmin):
+    pass
