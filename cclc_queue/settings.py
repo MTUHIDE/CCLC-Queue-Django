@@ -134,9 +134,9 @@ if DEBUG:
 else:
     SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = "mtu.instructure.com"
 
-SOCIAL_AUTH_CANVAS_OAUTH2_KEY = environ.get("CANVAS_KEY", "")
+SOCIAL_AUTH_CANVAS_OAUTH2_KEY = env("CANVAS_KEY")
 
-SOCIAL_AUTH_CANVAS_OAUTH2_SECRET = environ.get("CANVAS_SECRET", "")
+SOCIAL_AUTH_CANVAS_OAUTH2_SECRET = env("CANVAS_SECRET")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
