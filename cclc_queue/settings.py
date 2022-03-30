@@ -30,7 +30,10 @@ SECRET_KEY = env("CCLC_QUEUE_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("CCLC_QUEUE_DEBUG")
 
-ALLOWED_HOSTS = ["queue.cclc.mtu.edu"]
+if DEBUG:
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = [".queue.cclc.mtu.edu"]
 
 
 # Application definition
