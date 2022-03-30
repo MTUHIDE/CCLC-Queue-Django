@@ -12,20 +12,24 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(DEBUG=(bool, False))
+env.read_env(BASE_DIR.joinpath(".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-o&h__o3m%nds&hg2qu8isg7a*+mb)8#9(p^j*4xh2ua1kcr!wh"
+SECRET_KEY = env("CCLC_QUEUE_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("CCLC_QUEUE_DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["queue.cclc.mtu.edu"]
 
 
 # Application definition
