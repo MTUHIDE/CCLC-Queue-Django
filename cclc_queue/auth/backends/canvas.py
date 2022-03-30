@@ -17,6 +17,7 @@ class CanvasOAuth2(BaseOAuth2):
     REFRESH_TOKEN_URL = "https://{base_url}/login/oauth2/token"
     REFRESH_TOKEN_METHOD = "POST"
     SCOPE_SEPARATOR = " "
+    REDIRECT_STATE = False
 
     @property
     def base_url(self):
