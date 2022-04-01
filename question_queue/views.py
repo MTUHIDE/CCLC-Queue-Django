@@ -1,4 +1,3 @@
-from datetime import date
 from django.http import HttpResponse
 from django.template import loader
 
@@ -11,7 +10,7 @@ def index(response):
 
 
 def student(response):
-    template = loader.get_template("question_queue/student.html")
+    template = loader.get_template("question_queue/student/student.html")
     context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
 
@@ -21,12 +20,14 @@ def instructor(response):
     context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
 
+
 def question(response):
     template = loader.get_template("question_queue/question.html")
     context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
 
+
 def coach(response):
-    template = loader.get_template('question_queue/coach.html')
-    context = {'question_queue': ''}
+    template = loader.get_template("question_queue/coach.html")
+    context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
