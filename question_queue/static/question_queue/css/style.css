@@ -1,0 +1,52 @@
+/* 
+|| INDEX NAVBAR ||
+*/
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.navbar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.navbar a:hover {
+    background-color: #ddd;
+    color: #000;
+}
+
+/* Add a color to the active/current link */
+.navbar a.active {
+    background-color: #fc0;
+    color: white;
+}
+
+/* 
+|| INSTRUCTOR PAGE ||
+*/
+.instr-page {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+.instr-table {
+    width: 100%;
+}
+.instr-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.instr-table tr:not(.header) {
+    cursor: pointer;
+}
+.instr-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 0;
+}

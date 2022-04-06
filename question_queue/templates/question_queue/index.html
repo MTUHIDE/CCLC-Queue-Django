@@ -2,11 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        {% block title %}<title>Index</title>{% endblock %}
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block title %}
+        <title>Index</title>
+        {% endblock %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'question_queue/style.css' %}">
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{% static 'question_queue/css/style.css' %}"
+        />
     </head>
     <body>
         <h1>CCLC Queue Site Index</h1>
