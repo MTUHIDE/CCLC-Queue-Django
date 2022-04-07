@@ -2,7 +2,7 @@
 || INDEX NAVBAR ||
 */
 .navbar {
-    background-color: #333;
+    background-color: black;
     overflow: hidden;
 }
 
@@ -29,24 +29,54 @@
 }
 
 /* 
-|| INSTRUCTOR PAGE ||
+|| Instructor NAVBAR ||
 */
-.instr-page {
-    margin-left: 2em;
-    margin-right: 2em;
-}
-.instr-table {
-    width: 100%;
-}
-.instr-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-.instr-table tr:not(.header) {
+
+/* Style the links inside the navigation bar */
+.navbar b {
     cursor: pointer;
-}
-.instr-table td {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 0;
-}
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .navbar b:hover {
+    cursor: pointer;
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .navbar b.active {
+    background-color: #FC0;
+    color: white;
+  }
+  
+  .instr-page {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .instr-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .instr-table tr:nth-child(even){background-color: #f2f2f2;}
+  
+  .instr-table tr:hover {background-color: #ddd;}
+  
+  .instr-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: gray;
+    color: white;
+  }
+  
+  tr.clickable-row { cursor: pointer; }
