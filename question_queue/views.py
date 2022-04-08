@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.template import loader
 
+from question_queue.models import Question
+
 
 # Create your views here.
 def index(response):
@@ -22,8 +24,11 @@ def instructor(response):
 
 
 def question(response):
+
+    questions = Question.objects.all()
+
     template = loader.get_template("question_queue/question.html")
-    context = {"question_queue": ""}
+    context = {"question_queue": "", "questions": questions}
     return HttpResponse(template.render(context, response))
 
 
