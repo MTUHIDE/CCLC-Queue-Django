@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -23,6 +22,8 @@ class EnrolledIn(models.Model):
     course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
 
     class Meta:
+        verbose_name = "Enrollment"
+        verbose_name_plural = "Enrollments"
         unique_together = (("user", "course"),)
 
 
@@ -44,9 +45,9 @@ class Reply(models.Model):
     replied_by = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = "Replies"
+
 
 class SupportedCourse(models.Model):
     course_code = models.CharField(max_length=6, primary_key=True)
-
-
-admin.site.register(SupportedCourse)
