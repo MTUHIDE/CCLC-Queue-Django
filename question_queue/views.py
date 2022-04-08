@@ -11,7 +11,7 @@ def index(response):
 
 
 def student(response):
-    template = loader.get_template("question_queue/student.html")
+    template = loader.get_template("question_queue/student/student.html")
     context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
 
@@ -20,6 +20,7 @@ def instructor(response):
     template = loader.get_template("question_queue/instructor.html")
     context = {"question_queue": ""}
     return HttpResponse(template.render(context, response))
+
 
 def coach(response):
     template = loader.get_template('question_queue/coach.html')
