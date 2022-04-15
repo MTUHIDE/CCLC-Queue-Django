@@ -25,7 +25,6 @@
             type="text/css"
             href="{% static 'question_queue/css/style.css' %}"
         />
-        
 
         <!-- this sytle sheet is why the Nav bar is bold and spread out-->
         <link
@@ -39,11 +38,15 @@
         <div class="instr-page">
             <h1>Instructor Page</h1>
             <div class="navbar">
-                <b href="http://127.0.0.1:8000/instructor/">Answered Questions</b>
-                <b href="http://127.0.0.1:8000/instructor/">Unanswered Questions</b>
+                <b href="http://127.0.0.1:8000/instructor/"
+                    >Answered Questions</b
+                >
+                <b href="http://127.0.0.1:8000/instructor/"
+                    >Unanswered Questions</b
+                >
                 <b href="http://127.0.0.1:8000/instructor/">Queue</b>
             </div>
-            
+
             <table class="instr-table">
                 <thead>
                     <tr
@@ -119,13 +122,13 @@
             id="Row1Modal"
             tabindex="-1"
             role="dialog"
-            aria-labelledby="Row2ModalLabel"
+            aria-labelledby="Row1ModalLabel"
             aria-hidden="true"
         >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="Row2ModalLabel">
+                        <h5 class="modal-title" id="Row1ModalLabel">
                             Row 1 Clicked
                         </h5>
                         <button
