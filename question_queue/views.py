@@ -18,6 +18,8 @@ def student(response):
 def instructor(response):
     template = loader.get_template("question_queue/instructor.html")
 
+    user = "Dr.Professor"
+
     table_data = [{
         "id": "1",
         "name": "Mark",
@@ -47,7 +49,7 @@ def instructor(response):
         "message": "Question Four",
     }]
 
-    context = {"question_queue": "", "questions": table_data}
+    context = {"question_queue": "", "questions": table_data, "user": user}
     return HttpResponse(template.render(context, response))
 
 

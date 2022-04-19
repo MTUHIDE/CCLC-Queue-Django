@@ -34,7 +34,20 @@
 .instr-page {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
+  padding-left: 2em;
+  padding-right: 2em;
   width: 100%;
+}
+
+.instr-table {
+  left: 0;
+  width: 100%;
+  margin-top: 2em;
+}
+
+.instr-page .filter a {
+  padding-right: 1em;
+  align-items: center;
 }
 
 .instr-table td {

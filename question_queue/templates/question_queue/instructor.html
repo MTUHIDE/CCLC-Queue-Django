@@ -35,18 +35,27 @@
     </head>
     <body>
         <div class="instr-page">
-            <h1>Instructor Page</h1>
-            <div style="display: flex; flex-direction: row">
+            <h1>Welcome, {{user}}, to the Instructor page</h1>
+            <div class="filter" style="display: flex; flex-direction: row">
+                <a href="http://127.0.0.1:8000/instructor/"
+                    >Open Questions</a
+                >
                 <a href="http://127.0.0.1:8000/instructor/"
                     >Answered Questions</a
                 >
                 <a href="http://127.0.0.1:8000/instructor/"
-                    >Unanswered Questions</a
+                    >Question Queue</a
                 >
-                <a href="http://127.0.0.1:8000/instructor/">Queue</a>
             </div>
 
             <table class="instr-table">
+                <colgroup>
+                    <col span="1" style="width: 5%" />
+                    <col span="1" style="width: 10%" />
+                    <col span="1" style="width: 10%" />
+                    <col span="1" style="width: 70%"/>
+                    <col span="1" style="width: 5%" />
+                </colgroup>
                 <thead>
                     <tr
                         class="header"
@@ -56,16 +65,9 @@
                         <th scope="col">Name</th>
                         <th scope="col">Course</th>
                         <th scope="col">Question</th>
-                        <th scope="col">Last Updated</th>
+                        <th scope="col">Created</th>
                     </tr>
                 </thead>
-                <colgroup>
-                    <col span="1" style="width: 5%" />
-                    <col span="1" style="width: 10%" />
-                    <col span="1" style="width: 10%" />
-                    <col span="1" />
-                    <col span="1" style="width: 5%" />
-                </colgroup>
                 <tbody>
                     {% for question in questions %}
                     {% with "#Row"|add:question.id|add:"Modal" as modalID %}
