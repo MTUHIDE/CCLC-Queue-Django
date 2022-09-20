@@ -1,3 +1,13 @@
+<!--
+    Variables:
+        id = question id + Modal
+        label_id =
+        name = student's name
+        question_body = the question being asked
+
+ -->
+
+ {% load crispy_forms_tags %}
 <div
     class="modal fade"
     id="{{id}}"
@@ -9,7 +19,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="{{label_id}}">{{title}}</h5>
+                <h5 class="modal-title" id="{{label_id}}">{{ name|add:"'s question" }}</h5>
                 <button
                     type="button"
                     class="close"
@@ -19,7 +29,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">{{question_body}}</div>
+        <form method="post">
+            <div class="modal-body">
+                {{question_body}}
+                <hr>
+                  {% comment %} <div class="mb-3">
+                    <textarea class="form-control" placeholder="Your Answer" id="text-area" style="height: 100px"></textarea>
+                  </div>
+                  <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="mark-solved">
+                    <label class="form-check-label" for="mark-solved">Mark as Solved</label>
+                  </div> {% endcomment %}
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <input type="hidden" name="replied_by" value="{{ user }}">
+                  <input type="hidden" name="question" value="{{ question }}">
+            </div>
             <div class="modal-footer">
                 <button
                     type="button"
@@ -28,10 +53,11 @@
                 >
                     Close
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                     Save changes
                 </button>
             </div>
+        </form>
         </div>
     </div>
 </div>

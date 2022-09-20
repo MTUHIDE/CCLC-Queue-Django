@@ -83,7 +83,7 @@
 
         {% for question in questions %}
         {% with "Row"|add:question.id|add:"Modal" as modalID %}
-        {% include "./question_modal.html" with id=modalID title="Test Title" question_body=question.message%}
+        {% include "./question_modal.html" with id=modalID name=question.name question_body=question.message user=user question=question.id %}
         {% endwith %}
         {% endfor %}
 
