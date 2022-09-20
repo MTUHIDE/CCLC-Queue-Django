@@ -7,11 +7,17 @@ from question_queue.models import (
     Question,
     Reply,
     SupportedCourse,
+    User,
 )
 
 
 @admin.register(CanvasCourse)
 class CanvasCourseAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
     pass
 
 
