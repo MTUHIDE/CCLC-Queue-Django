@@ -73,7 +73,7 @@
                     {% with "#Row"|add:question.id|add:"Modal" as modalID %}
                     {% with page="http://127.0.0.1:8000/instructor/" modal_id=modalID %}
                     {% with question_id=question.id student_name=question.name class=question.class %}
-                    {% with question="I don't know how to?" time=question.time %}
+                    {% with question=question.message time=question.time %}
                     {% include "./question_table_row.html" %}
                     {% endwith %} {% endwith %} {% endwith %} {% endwith %}
                     {% endfor %}
