@@ -34,7 +34,7 @@
         />
     </head>
     <body>
-        <div class="instr-page">
+        <div class="instr-page" align ="center">
             <h1>Welcome, {{user}}, to the Instructor page</h1>
             <div class="filter" style="display: flex; flex-direction: row">
                 <a href="http://127.0.0.1:8000/instructor/"
@@ -47,38 +47,39 @@
                     >Question Queue</a
                 >
             </div>
-
-            <table class="instr-table">
-                <colgroup>
-                    <col span="1" style="width: 5%" />
-                    <col span="1" style="width: 10%" />
-                    <col span="1" style="width: 10%" />
-                    <col span="1" style="width: 70%"/>
-                    <col span="1" style="width: 5%" />
-                </colgroup>
-                <thead>
-                    <tr
-                        class="header"
-                        data-href="http://127.0.0.1:8000/instructor/"
-                    >
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Course</th>
-                        <th scope="col">Question</th>
-                        <th scope="col">Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for question in questions %}
-                    {% with "#Row"|add:question.id|add:"Modal" as modalID %}
-                    {% with page="http://127.0.0.1:8000/instructor/" modal_id=modalID %}
-                    {% with question_id=question.id student_name=question.name class=question.class %}
-                    {% with question="I don't know how to?" time=question.time %}
-                    {% include "./question_table_row.html" %}
-                    {% endwith %} {% endwith %} {% endwith %} {% endwith %}
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class = "table-section">
+                <table class="instr-table">
+                    <colgroup>
+                        <col span="1" style="width: 5%" />
+                        <col span="1" style="width: 10%" />
+                        <col span="1" style="width: 10%" />
+                        <col span="1" style="width: 70%"/>
+                        <col span="1" style="width: 5%" />
+                    </colgroup>
+                    <thead>
+                        <tr
+                            class="header"
+                            data-href="http://127.0.0.1:8000/instructor/"
+                        >
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Course</th>
+                            <th scope="col">Question</th>
+                            <th scope="col5">Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for question in questions %}
+                        {% with "#Row"|add:question.id|add:"Modal" as modalID %}
+                        {% with page="http://127.0.0.1:8000/instructor/" modal_id=modalID %}
+                        {% with question_id=question.id student_name=question.name class=question.class %}
+                        {% with question="I don't know how to?" time=question.time %}
+                        {% include "./question_table_row.html" %}
+                        {% endwith %} {% endwith %} {% endwith %} {% endwith %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         {% for question in questions %}
