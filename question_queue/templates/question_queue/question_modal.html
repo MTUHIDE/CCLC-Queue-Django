@@ -40,10 +40,10 @@
                     <input type="checkbox" class="form-check-input" id="mark-solved">
                     <label class="form-check-label" for="mark-solved">Mark as Solved</label>
                   </div> {% endcomment %}
-                  {% csrf_token %}
-                  {{ form|crispy }}
                   <input type="hidden" name="replied_by" value="{{ user }}">
                   <input type="hidden" name="question" value="{{ question }}">
+                  {% csrf_token %}
+                  {{ form|crispy }}
             </div>
             <div class="modal-footer">
                 <button

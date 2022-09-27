@@ -1,8 +1,9 @@
+from xmlrpc.client import DateTime
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 
-from .models import Question
+from .models import Question, Reply, User
 
 from .forms import AnswerForm
 
@@ -27,38 +28,8 @@ def getAnswerForm(request):
 
 
 def instructor(request):
-    user = "Dr.Professor"
 
-    # table_data = [
-    #     {
-    #         "id": "1",
-    #         "name": "Mark",
-    #         "class": "CS1121",
-    #         "time": "12:30",
-    #         "message": "Question One",
-    #     },
-    #     {
-    #         "id": "2",
-    #         "name": "Johnson",
-    #         "class": "CS1142",
-    #         "time": "12:55",
-    #         "message": "Question Two",
-    #     },
-    #     {
-    #         "id": "3",
-    #         "name": "Larry",
-    #         "class": "CS1121",
-    #         "time": "02:20",
-    #         "message": "Question Three",
-    #     },
-    #     {
-    #         "id": "4",
-    #         "name": "Susan",
-    #         "class": "CS1142",
-    #         "time": "02:55",
-    #         "message": "Question Four",
-    #     },
-    # ]
+    user = User.objects.get(first_name="Jon", last_name="Doe")
 
     # Query all questions
     questions = Question.objects.all()
@@ -85,10 +56,24 @@ def instructor(request):
     }
 
     if request.method == "POST":
-        print(request.POST.get("question", "error"))
-        print(request.POST.get("replied_by", user))
-        print(request.POST.get("message", "error"))
-        print(request.POST.get("answer", "off"))
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            print(cleaned_data)
+
+            question_replied = Question.objects.get(id=request.POST.get("question"))
+
+            # Implement last_updated time if we add an edit reply feature
+            reply = Reply(
+                question=question_replied,
+                message=cleaned_data["message"],
+                created_at=DateTime,
+                last_updated=DateTime,
+                replied_by=user,
+                answer=cleaned_data["answer"],
+            )
+            reply.save()
+
         # This return makes it so we don't get new POSTs on refresh
         return redirect("/instructor/", context)
 
