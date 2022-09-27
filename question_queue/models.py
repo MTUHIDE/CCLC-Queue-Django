@@ -35,6 +35,11 @@ class Question(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     in_person = models.BooleanField(default=False)
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    hidden = models.BooleanField(default=False)
+
+
+class QueueQuestion(Question):
+    answered_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Reply(models.Model):
