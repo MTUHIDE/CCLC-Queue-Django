@@ -7,7 +7,7 @@
 
  -->
 
- {% load crispy_forms_tags %}
+{% load crispy_forms_tags %}
 <div
     class="modal fade"
     id="{{id}}"
@@ -33,17 +33,10 @@
             <div class="modal-body">
                 {{question_body}}
                 <hr>
-                  {% comment %} <div class="mb-3">
-                    <textarea class="form-control" placeholder="Your Answer" id="text-area" style="height: 100px"></textarea>
-                  </div>
-                  <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="mark-solved">
-                    <label class="form-check-label" for="mark-solved">Mark as Solved</label>
-                  </div> {% endcomment %}
-                  {% csrf_token %}
-                  {{ form|crispy }}
-                  <input type="hidden" name="replied_by" value="{{ user }}">
-                  <input type="hidden" name="question" value="{{ question }}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="hidden" name="replied_by" value="{{ user }}">
+                <input type="hidden" name="question" value="{{ question }}">
             </div>
             <div class="modal-footer">
                 <button

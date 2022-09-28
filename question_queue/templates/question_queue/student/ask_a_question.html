@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 <h1>Course: College of Computing Learning Center</h1>
 
 <!-- <form method="GET">
@@ -6,34 +7,18 @@
 </form> -->
 
 
-<form class="row g-3">
-
+<form class="row g-3" method="POST">
     <div class="col-md-4">
-        <label for="inputState" class="form-label">Assignment:</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
+        {% csrf_token %}
+        {{ form.course|as_crispy_field }}
     </div>
-    <div class="col-md-4">
-        <label for="inputState" class="form-label">Language:</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
+    <div class="col-md-8">
+        </br>
+        {{ form.in_person|as_crispy_field }}
     </div>
-
-
+    <input type="hidden" name="replied_by" value="{{ user }}">
     <div class="col-12">
-        <label for="inputSubject" class="form-label">Subject:</label>
-        <input type="text" class="form-control" id="subject" placeholder="What is your question?">
-    </div>
-
-
-    <div class="col-12">
-        <label for="inputQuestion" class="form-label">Question:</label>
-        <input type="text" class="form-control" id="inputQuestion"
-            placeholder="Provide as much relevent detail as possible.">
+        {{ form.question|as_crispy_field }}
     </div>
 
     <div class="col-12">
