@@ -10,8 +10,8 @@
         {% load static %}
         <script src="{% static 'question_queue/js/instructor.js' %}"></script>
         <script
-            src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"
         ></script>
         <script
@@ -73,19 +73,14 @@
                     {% with "#Row"|add:question.id|add:"Modal" as modalID %}
                     {% with page="http://127.0.0.1:8000/instructor/" modal_id=modalID %}
                     {% with question_id=question.id student_name=question.name class=question.class %}
-                    {% with question="I don't know how to?" time=question.time %}
+                    {% with question_body=question.message time=question.time %}
+                    {% with "Row"|add:question.id|add:"Modal" as modalID %}
+                    {% include "./question_modal.html" with id=modalID name=question.name question_body=question.message user=user question=question.id %}
                     {% include "./question_table_row.html" %}
-                    {% endwith %} {% endwith %} {% endwith %} {% endwith %}
+                    {% endwith %} {% endwith %} {% endwith %} {% endwith %} {% endwith %}
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-
-        {% for question in questions %}
-        {% with "Row"|add:question.id|add:"Modal" as modalID %}
-        {% include "./question_modal.html" with id=modalID name=question.name question_body=question.message user=user question=question.id %}
-        {% endwith %}
-        {% endfor %}
-
     </body>
 </html>

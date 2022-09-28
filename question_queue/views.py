@@ -7,7 +7,6 @@ from .models import Question
 from .forms import AnswerForm
 
 
-# Create your views here.
 def index(response):
     template = loader.get_template("question_queue/index.html")
     context = {"question_queue": ""}
@@ -20,47 +19,8 @@ def student(response):
     return HttpResponse(template.render(context, response))
 
 
-def getAnswerForm(request):
-    form = AnswerForm(request.POST)
-    print(form)
-    return render(request, "question_queue/instructor.html", {"form": form})
-
-
 def instructor(request):
     user = "Dr.Professor"
-
-    # table_data = [
-    #     {
-    #         "id": "1",
-    #         "name": "Mark",
-    #         "class": "CS1121",
-    #         "time": "12:30",
-    #         "message": "Question One",
-    #     },
-    #     {
-    #         "id": "2",
-    #         "name": "Johnson",
-    #         "class": "CS1142",
-    #         "time": "12:55",
-    #         "message": "Question Two",
-    #     },
-    #     {
-    #         "id": "3",
-    #         "name": "Larry",
-    #         "class": "CS1121",
-    #         "time": "02:20",
-    #         "message": "Question Three",
-    #     },
-    #     {
-    #         "id": "4",
-    #         "name": "Susan",
-    #         "class": "CS1142",
-    #         "time": "02:55",
-    #         "message": "Question Four",
-    #     },
-    # ]
-
-    # Query all questions
     questions = Question.objects.all()
 
     # Initialize data to be
