@@ -45,7 +45,7 @@ def instructor(request):
             "id": str(question.id),
             "name": question.asked_by.first_name,
             "class": question.course.name,
-            "time": question.created_at,
+            "time": question.created_at.time,
             "message": question.message,
         }
         table_data.append(question_info)
