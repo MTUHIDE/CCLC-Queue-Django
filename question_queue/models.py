@@ -39,7 +39,9 @@ class Question(models.Model):
 
 
 class QueueQuestion(Question):
-    answered_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    answered_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True
+    )
 
 
 class Reply(models.Model):
