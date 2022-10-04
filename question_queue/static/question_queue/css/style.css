@@ -84,3 +84,7 @@ thead {
   border: none;
   border-bottom-color: #c7cdd1 !important
 }
+
+.asteriskField {
+    display: none;
+}
