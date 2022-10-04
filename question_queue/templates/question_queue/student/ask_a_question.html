@@ -1,29 +1,76 @@
-{% load crispy_forms_tags %}
-<h1>Course: College of Computing Learning Center</h1>
+<html lang="en">
+    {% load crispy_forms_tags %}
+    <body>
+        <h1>Course: College of Computing Learning Center</h1>
 
-<!-- <form method="GET">
-    {{ form }}
-    <input type="submit" value="Submit" />
-</form> -->
+        <!-- <form method="GET">
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form> -->
+
+        <form class="row g-3" method="POST" name="queueForm">
+            <div class="col-md-4">
+                {% csrf_token %}
+                {{ form.course|as_crispy_field }}
+            </div>
+            <div class="col-md-8">
+                </br>
+                {{ form.in_person|as_crispy_field }}
+            </div>
+            <input type="hidden" name="replied_by" value="{{ user }}">
+            <div class="col-12" id="question" onKeyup="enableSubmit()" required>
+                {{ form.question|as_crispy_field }}
+            </div>
+
+            <div class="col-12">
+                <!--Trigger/Open the window-->
+                <button type="submit" id="submit-btn" class="btn btn btn-success">Ask Question!</button>
+            </div>
+
+            {%if in_queue%}
+                <!--Modal-->
+                <div id="queue-modal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <header class="modal-header">
+                            CCLC Question Queue
+                        </header>
+                        <p>Your place in the queue: nth</p>
+                        <footer class="modal-footer">
+                            Please wait just a few minutes for a coach or instructor to review your question.
+                        </footer>
+                    </div>
+                </div>
+            {%endif%}
+
+        </form>
 
 
-<form class="row g-3" method="POST">
-    <div class="col-md-4">
-        {% csrf_token %}
-        {{ form.course|as_crispy_field }}
-    </div>
-    <div class="col-md-8">
-        </br>
-        {{ form.in_person|as_crispy_field }}
-    </div>
-    <input type="hidden" name="replied_by" value="{{ user }}">
-    <div class="col-12">
-        {{ form.question|as_crispy_field }}
-    </div>
 
-    <div class="col-12">
-        <button type="submit" class="btn btn btn-success">Ask Question!</button>
-    </div>
-</form>
+        <!--JavaScript-->
+        <script>
+            //get the button that opens the window
+            var btn = document.getElementById("submit-btn");
+            var modal = document.getElementById("queue-modal")
 
-<hr />
+            //opens modal when button is clicked
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                modal.style.display = "none";
+                }
+            }
+        </script>
+        <hr />
+    </body>
+</html>

@@ -19,6 +19,7 @@ def student(request):
         "question_queue": "",
         "user": user,
         "form": QuestionForm,
+        "in_queue": False,
     }
 
     if request.method == "POST":
