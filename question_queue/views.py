@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 from .models import Question
 
-from .forms import AnswerForm
+from .forms import QuestionForm, AnswerForm
 
 
 def index(response):
@@ -13,10 +13,23 @@ def index(response):
     return HttpResponse(template.render(context, response))
 
 
-def student(response):
-    template = loader.get_template("question_queue/student/student.html")
-    context = {"question_queue": ""}
-    return HttpResponse(template.render(context, response))
+def student(request):
+    user = "Little Student"
+    context = {
+        "question_queue": "",
+        "user": user,
+        "form": QuestionForm,
+    }
+
+    if request.method == "POST":
+        print(request.POST.get("course", "error"))
+        print(request.POST.get("asked_by", user))
+        print(request.POST.get("question", "error"))
+        print(request.POST.get("in_person", "off"))
+        # This return makes it so we don't get new POSTs on refresh
+        return redirect("/student", context)
+
+    return render(request, "question_queue/student/student.html", context)
 
 
 def instructor(request):

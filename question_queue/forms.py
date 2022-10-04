@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reply
+from .models import Question, Reply, CanvasCourse
 
 LANGUAGE_CHOICES = (
     ("1", "Java"),
@@ -9,13 +9,33 @@ LANGUAGE_CHOICES = (
     ("5", "Rust"),
 )
 
+COURSE_CHOICES = [(course.id, course.name) for course in CanvasCourse.objects.all()]
+
 
 class QuestionForm(forms.Form):
-    assignment = forms.ChoiceField()
-    language = forms.ChoiceField(choices=LANGUAGE_CHOICES)
-    subject = forms.CharField(label="Subject:", max_length=100)
-    question = forms.CharField(label="Question:", max_length=100)
-    file = forms.FileField()
+    course = forms.ChoiceField(
+        required=False,
+        choices=([(0, "")] + COURSE_CHOICES),
+    )
+    question = forms.CharField(
+        required=True,
+        max_length=100,
+        widget=forms.Textarea(
+            attrs={"class": "form-control", "style": "height: 100px"}
+        ),
+    )
+    in_person = forms.BooleanField(
+        label="In Person",
+        required=False,
+        widget=forms.CheckboxInput(attrs={"class": "form-check-input"}),
+    )
+    # language = forms.ChoiceField(choices=LANGUAGE_CHOICES)
+    # subject = forms.CharField(label="Subject:", max_length=100)
+    # file = forms.FileField()
+
+    class Meta:
+        model = Question
+        fields = ("course", "question", "in_person")
 
 
 class AnswerForm(forms.Form):
