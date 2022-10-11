@@ -37,6 +37,11 @@ class QuestionAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"
 
 
+@admin.register(QueueQuestion)
+class QueueQuestionAdmin(admin.ModelAdmin):
+    date_hierarchy = "created_at"
+
+
 @admin.register(Reply)
 class ReplyAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"

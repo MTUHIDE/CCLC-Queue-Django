@@ -1,10 +1,9 @@
 from django.http import HttpResponse
+from django.shortcuts import redirect, render
 from django.template import loader
-from django.shortcuts import render, redirect
 
+from .forms import AnswerForm, QuestionForm
 from .models import Question, QueueQuestion
-
-from .forms import QuestionForm, AnswerForm, FilterQueue
 
 
 def index(response):
@@ -53,8 +52,21 @@ def instructor(request):
 
 
 def coach(request):
-    user = "dannyshannon"
-    table_data = grabQuestions()
+    user = "Super Coach"
+
+    # Initialize data to be
+    table_data = []
+
+    # Add all query'd data the table that will passed as context
+    for question in QueueQuestion.objects.filter(hidden=False):
+        question_info = {
+            "id": str(question.id),
+            "name": question.asked_by.first_name,
+            "class": question.course.name,
+            "time": question.created_at.time,
+            "message": question.message,
+        }
+        table_data.append(question_info)
 
     context = {
         "questions": table_data,
@@ -62,23 +74,6 @@ def coach(request):
         "form": AnswerForm,
         "filter": "",
     }
-
-    if request.method == "POST":
-        if "filter_queue" in request.POST:
-            queueFilter = FilterQueue(request.POST)
-            if queueFilter.is_valid():
-                queueFilterMode = request.POST.get("filter_queue", "error")
-                context["questions"] = filterHelper(table_data, queueFilterMode)
-            else:
-                # Do something if request is dropped
-                pass
-            return render(request, "question_queue/coach.html", context)
-        print(request.POST.get("question", "error"))
-        print(request.POST.get("replied_by", user))
-        print(request.POST.get("message", "error"))
-        print(request.POST.get("answer", "off"))
-        # This return makes it so we don't get new POSTs on refresh
-        return redirect("/coach/", context)
 
     return render(request, "question_queue/coach.html", context)
 
