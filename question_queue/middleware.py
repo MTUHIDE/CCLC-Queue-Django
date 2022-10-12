@@ -28,7 +28,7 @@ class MemoryUsageMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         mem = psutil.Process(os.getpid()).memory_info()
         diff = mem.rss - request._mem.rss
-        if diff > THRESHOLD and settings.DEBUG:
+        if diff > THRESHOLD or settings.DEBUG:
             diff = readableMemory(diff)
             print("MEMORY USAGE %s" % ((diff, request.path),))
         return response
