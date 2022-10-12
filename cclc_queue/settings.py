@@ -51,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "question_queue.middleware.MemoryUsageMiddleware",
 ]
 
 ROOT_URLCONF = "cclc_queue.urls"
