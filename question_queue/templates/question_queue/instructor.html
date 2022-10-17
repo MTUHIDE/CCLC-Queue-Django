@@ -32,20 +32,15 @@
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
             crossorigin="anonymous"
         />
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" >
     </head>
     <body>
         <div class="instr-page" align ="center">
             <h1>Welcome, {{user}}, to the Instructor page</h1>
             <div class="filter" style="display: flex; flex-direction: row">
-                <a href="http://127.0.0.1:8000/instructor/"
-                    >Open Questions</a
-                >
-                <a href="http://127.0.0.1:8000/instructor/"
-                    >Answered Questions</a
-                >
-                <a href="http://127.0.0.1:8000/instructor/"
-                    >Question Queue</a
-                >
+                <a href="http://127.0.0.1:8000/instructor/">Open Questions</a>
+                <a href="http://127.0.0.1:8000/instructor/">Answered Questions</a>
+                <a href="http://127.0.0.1:8000/instructor/">Question Queue</a>
             </div>
 
             <table class="instr-table">

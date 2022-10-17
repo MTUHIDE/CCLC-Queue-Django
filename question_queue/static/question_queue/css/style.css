@@ -85,6 +85,10 @@ thead {
   border-bottom-color: #c7cdd1 !important
 }
 
+.asteriskField {
+    display: none;
+}
+
 /* Dark Mode Toggle Button */
 .toggle-dark{
   position: relative;
