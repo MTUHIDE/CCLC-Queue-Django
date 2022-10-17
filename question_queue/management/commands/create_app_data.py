@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.core.management.base import BaseCommand
-from question_queue.factories import UserFactory
+from question_queue.factories import UserFactory, CanvasCourseFactory
 
 
 @transaction.atomic
@@ -11,3 +11,4 @@ class Command(BaseCommand):
         print("Creating Users...\n")
         for _ in range(100):
             UserFactory()
+            CanvasCourseFactory()
