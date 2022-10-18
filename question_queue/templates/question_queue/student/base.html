@@ -17,8 +17,8 @@
 
 <body id="body" class="dark-mode">
     <header>
-        <label class="toggle-dark">
-            <input type="checkbox" id="toggle-dark" />
+        <label class="toggle-dark hidden">
+            <input type="checkbox" id="toggle-dark hidden" />
             <span class="slider">
         </label>
     </header>
@@ -42,6 +42,14 @@
         {% include "./row2/component2.html" %}
     </div>
     <script>
+
+        //testing
+        if(window.matchMedia('(prefers-color scheme)').media !== 'not all'){
+            console.log('yay, we support this!');
+        }
+
+        {% comment %} Not needed until we get the slider working for everyone
+
         var checkbox = document.getElementById("toggle-dark");
 
         //check storage if dark mode was on or off
@@ -73,7 +81,7 @@
             document.body.classList.remove("dark-mode");
             checkbox.checked = false;
             sessionStorage.setItem("mode", "light");
-        }
+        } {% endcomment %}
     </script>
 </body>
 

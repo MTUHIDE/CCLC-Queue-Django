@@ -89,6 +89,12 @@ thead {
     display: none;
 }
 
+.rounded{
+  background-color: #0287ce3c !important;
+  opacity: 1;
+  justify-content: center;
+}
+
 /* Dark Mode Toggle Button */
 .toggle-dark{
   position: relative;
@@ -143,10 +149,23 @@ input:checked + .slider::before{
   transform: translateX(17px);
 }
 
-body.dark-mode{
-  background: #1f1f1f;
+@media (prefers-color-scheme: dark){
+  body.dark-mode{
+    background: #1f1f1f;
+  }
+
+  .dark-mode .turn-light{
+    color: #cccccc;
+  }
+
+  .form-control{
+    background-color: #474747 !important;
+    border: none !important;
+  }
 }
 
-.dark-mode .turn-light{
-  color: #cccccc;
+.hidden{
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
