@@ -6,6 +6,13 @@ from django.db import models
 
 
 class User(AbstractUser):
+    class Meta:
+        permissions = (
+            ("can_access_student_view", "Can access the student view"),
+            ("can_access_coach_view", "Can access the coach view"),
+            ("can_access_instructor_view", "Can access the instructor view"),
+        )
+
     @property
     def canvas(self):
         canvas_user = self.social_auth.get(provider="canvas-oauth2")
