@@ -11,17 +11,17 @@ class CanvasOAuth2(BaseOAuth2):
     """
 
     name = "canvas-oauth2"
-    AUTHORIZATION_URL = "https://{base_url}/login/oauth2/auth"
-    ACCESS_TOKEN_URL = "https://{base_url}/login/oauth2/token"
+    AUTHORIZATION_URL = "{base_url}/login/oauth2/auth"
+    ACCESS_TOKEN_URL = "{base_url}/login/oauth2/token"
     ACCESS_TOKEN_METHOD = "POST"
-    REFRESH_TOKEN_URL = "https://{base_url}/login/oauth2/token"
+    REFRESH_TOKEN_URL = "{base_url}/login/oauth2/token"
     REFRESH_TOKEN_METHOD = "POST"
     SCOPE_SEPARATOR = " "
     REDIRECT_STATE = False
 
     @property
     def base_url(self):
-        return self.setting("BASE_URL", "canvas.instructure.com")
+        return self.setting("BASE_URL", "https://canvas.instructure.com")
 
     def authorization_url(self):
         return self.AUTHORIZATION_URL.format(base_url=self.base_url)
@@ -53,7 +53,7 @@ class CanvasOAuth2(BaseOAuth2):
         See https://canvas.instructure.com/doc/api/users.html#method.users.api_show
         """
         return self.get_json(
-            f"https://{self.base_url}/api/v1/users/self",
+            f"{self.base_url}/api/v1/users/self",
             headers={"Authorization": f"Bearer {access_token}"},
             method="GET",
         )

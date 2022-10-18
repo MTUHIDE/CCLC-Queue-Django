@@ -16,7 +16,7 @@ class User(AbstractUser):
     @property
     def canvas(self):
         canvas_user = self.social_auth.get(provider="canvas-oauth2")
-        canvas_url = f"https://{settings.SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL}"
+        canvas_url = settings.SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL
         return Canvas(canvas_url, canvas_user.extra_data["access_token"])
 
 

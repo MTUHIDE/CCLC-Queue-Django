@@ -132,10 +132,9 @@ SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = [
     "last_name",
 ]
 
-if DEBUG:
-    SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = "mtu.beta.instructure.com"
-else:
-    SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = "mtu.instructure.com"
+SOCIAL_AUTH_CANVAS_OAUTH2_BASE_URL = env.str(
+    "CANVAS_BASE_URL", default="https://mtu.instructure.com"
+)
 
 SOCIAL_AUTH_CANVAS_OAUTH2_KEY = env("CANVAS_KEY")
 
