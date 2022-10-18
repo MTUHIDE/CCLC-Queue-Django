@@ -7,12 +7,10 @@ class User(AbstractUser):
 
 
 class CanvasCourse(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.TextField()
 
 
 class Assignment(models.Model):
-    id = models.IntegerField(primary_key=True)
     course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
     name = models.TextField()
 

@@ -5,6 +5,7 @@ from question_queue.models import (
     CanvasCourse,
     EnrolledIn,
     Question,
+    QueueQuestion,
     Reply,
     SupportedCourse,
     User,
@@ -43,4 +44,9 @@ class ReplyAdmin(admin.ModelAdmin):
 
 @admin.register(SupportedCourse)
 class SupportedCourseAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(QueueQuestion)
+class QueueQuestionAdmin(admin.ModelAdmin):
     pass
