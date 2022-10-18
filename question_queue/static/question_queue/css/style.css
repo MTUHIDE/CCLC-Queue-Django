@@ -161,6 +161,7 @@ input:checked + .slider::before{
   .form-control{
     background-color: #474747 !important;
     border: none !important;
+    color: #cccccc !important;
   }
 }
 
