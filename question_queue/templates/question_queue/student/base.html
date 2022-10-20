@@ -15,7 +15,13 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" >
 </head>
 
-<body>
+<body id="body" class="dark-mode">
+    <header>
+        <label class="toggle-dark hidden">
+            <input type="checkbox" id="toggle-dark hidden" />
+            <span class="slider">
+        </label>
+    </header>
     {% block header %}
     <h1>Student Page</h1>
     {% endblock %}
@@ -35,6 +41,40 @@
         <!-- Include row 2 -->
         {% include "./row2/component2.html" %}
     </div>
+    <script>
+        {% comment %} var checkbox = document.getElementById("toggle-dark");
+
+        //check storage if dark mode was on or off
+        if(sessionStorage.getItem("mode") == 'dark'){
+            darkmode();
+        } else{
+            nodark();
+        }
+
+        //if the checkbox is changed, run a function
+        checkbox.addEventListener("change", function(){
+            //check if the checkbox is checked
+            if(checkbox.checked){
+                darkmode();
+            } else {
+                nodark();
+            }
+        });
+
+        //function for checkbox when checkbox is checked
+        function darkmode(){
+            document.body.classList.add("dark-mode");
+            checkbox.checked = true;
+            sessionStorage.setItem("mode", "dark");
+        }
+
+        //function for when checkbox is not checked
+        function nodark(){
+            document.body.classList.remove("dark-mode");
+            checkbox.checked = false;
+            sessionStorage.setItem("mode", "light");
+        } {% endcomment %}
+    </script>
 </body>
 
 </html>

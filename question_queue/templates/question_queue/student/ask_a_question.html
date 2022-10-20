@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-<h1>Course: College of Computing Learning Center</h1>
+<h1 class="turn-light">Course: College of Computing Learning Center</h1>
 
 <!-- <form method="GET">
     {{ form }}
@@ -7,7 +7,7 @@
 </form> -->
 
 
-<form class="row g-3" method="POST">
+<form class="row g-3 turn-light" method="POST">
     <div class="col-md-4">
         {% csrf_token %}
         {{ form.course|as_crispy_field }}
@@ -26,4 +26,4 @@
     </div>
 </form>
 
-<hr />
+<hr class="turn-light" />
