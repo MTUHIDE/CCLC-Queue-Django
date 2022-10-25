@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  mysql:
+    container_name: cclc_queue_mysql
+    image: mysql:8
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cclc-queue
