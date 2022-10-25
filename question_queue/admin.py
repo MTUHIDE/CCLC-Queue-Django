@@ -50,8 +50,3 @@ class ReplyAdmin(admin.ModelAdmin):
 @admin.register(SupportedCourse)
 class SupportedCourseAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(QueueQuestion)
-class QueueQuestionAdmin(admin.ModelAdmin):
-    pass
