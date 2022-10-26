@@ -26,13 +26,13 @@
                     data-dismiss="modal"
                     aria-label="Close"
                 >
-                    <span aria-hidden="true">&times;</span>
+                    <span class="turn-light" aria-hidden="true">&times;</span>
                 </button>
             </div>
         <form method="post">
             <div class="modal-body">
                 {{question_body}}
-                <hr>
+                <hr class="hr-turn-light">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <input type="hidden" name="replied_by" value="{{ user }}">
