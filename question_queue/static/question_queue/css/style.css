@@ -107,60 +107,6 @@ thead {
   justify-content: center;
 }
 
-/* Dark Mode Toggle Button */
-.toggle-dark{
-  position: relative;
-  display:inline-block;
-  width: 50px;
-  height: 34px;
-}
-/*Hide default html checkbox*/
-.toggle-dark input{
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider{
-  position: absolute;
-  cursor:pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 34px;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before{
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  border-radius: 50%;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider{
-  background-color: #0285ce;
-}
-
-input:focus + .slider{
-  box-shadow: 0 0 1px #0285ce;
-}
-
-input:checked + .slider::before{
-  -webkit-transform: translateX(17px);
-  -ms-transform: translateX(17px);
-  transform: translateX(17px);
-}
-
 @media (prefers-color-scheme: dark){
   body.dark-mode{
     background: #1f1f1f;
@@ -174,6 +120,48 @@ input:checked + .slider::before{
     background-color: #474747 !important;
     border: none !important;
     color: #cccccc !important;
+  }
+  .instr-table{
+    box-shadow: none;
+  }
+
+  .instr-table tr:nth-child(even){
+    background-color:#2d2d2d;
+    color:#cccccc;
+  }
+
+  .instr-table tr:nth-child(odd){
+    background-color:#222222;
+    color: #cccccc;
+  }
+
+  .instr-table tbody tr {
+    box-shadow: 0 0 2px #cccccc;
+  }
+
+  .instr-table tbody tr:hover{
+    background-color: #000000d2;
+  }
+
+  .instr-table .header{
+    background-color: #474747;
+    color: #cccccc;
+    box-shadow: none;
+  }
+
+  .modal-header{
+    background-color: #222222;
+    color: #cccccc;
+  }
+
+  .modal-body {
+    background-color: #222222;
+    color: #cccccc;
+  }
+
+  .modal-footer{
+    background-color: #222222;
+    color: #cccccc;
   }
 }
 
