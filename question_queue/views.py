@@ -69,7 +69,6 @@ def instructor(request):
 
 
 def coach(request):
-    print("VIEW")
     user = "dannyshannon"
     questions = Question.objects.all()
 
@@ -78,6 +77,9 @@ def coach(request):
 
     # Add all query'd data the table that will passed as context
     for question in questions:
+        # Should only ever be 1 or 0 because unique IDs
+        queueQuestion = QueueQuestion.objects.filter(id=question.id)
+        answeredBy = queueQuestion[0].answered_by.username if queueQuestion else None
         question_info = {
             "id": str(question.id),
             "name": question.asked_by.first_name,
@@ -85,10 +87,9 @@ def coach(request):
             "time": question.created_at.time,
             "message": question.message,
             "hidden": question.hidden,
-            "answer": QueueQuestion(question).answered_by.username
-            if QueueQuestion(question).answered_by is not None
-            else "",
+            "answered": answeredBy,
         }
+        print(QueueQuestion.objects.filter(id=question.id))
         table_data.append(question_info)
 
     context = {
@@ -119,14 +120,13 @@ def coach(request):
     return render(request, "question_queue/coach.html", context)
 
 
-# TODO: this.
 def filterHelper(questionQueue, mode):
     if mode == "open":
-        # Do something interesting
-        return []
+        # All unanswered questions
+        return [question for question in questionQueue if not question["answered"]]
     elif mode == "answered":
-        # Do something interesting
-        return []
+        # All answered questions
+        return [question for question in questionQueue if question["answered"]]
     else:
         # Just the normal queue
         return questionQueue
