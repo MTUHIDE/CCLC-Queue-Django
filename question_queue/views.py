@@ -90,7 +90,8 @@ def coach(request):
             "answered": answeredBy,
         }
         print(QueueQuestion.objects.filter(id=question.id))
-        table_data.append(question_info)
+        if not question_info["hidden"]:
+            table_data.append(question_info)
 
     context = {
         "question_queue": "",
