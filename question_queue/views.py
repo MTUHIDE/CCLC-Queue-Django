@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 from .models import Question
 
-from .forms import QuestionForm, AnswerForm
+from .forms import QuestionForm, AnswerForm, FilterQueue
 
 
 def index(response):
@@ -69,7 +69,7 @@ def instructor(request):
 
 
 def coach(request):
-    user = "Super Coach"
+    user = "dannyshannon"
     questions = Question.objects.all()
 
     # Initialize data to be
@@ -91,9 +91,26 @@ def coach(request):
         "questions": table_data,
         "user": user,
         "form": AnswerForm,
+        "filter": "",
     }
 
     if request.method == "POST":
+        if "filter_queue" in request.POST:
+            queueFilter = FilterQueue(request.POST)
+            if queueFilter.is_valid():
+                queueFilter = request.POST.get("filter_queue", "error")
+                if queueFilter == "open":
+                    # Return open questions
+                    return redirect("/coach/", context)
+                elif queueFilter == "answered":
+                    # Return answered questions
+                    return redirect("/coach/", context)
+                else:
+                    # Return all questions
+                    return redirect("/coach/", context)
+            else:
+                # Do something if request is dropped
+                return redirect("/coach/", context)
         print(request.POST.get("question", "error"))
         print(request.POST.get("replied_by", user))
         print(request.POST.get("message", "error"))

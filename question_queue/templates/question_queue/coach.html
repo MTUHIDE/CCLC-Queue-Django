@@ -38,9 +38,12 @@
         <br>
         <h1>Coach Page</h1>
         <div class="filter" style="display: flex; flex-direction: row">
-            <a href="http://127.0.0.1:8000/coach/">Open Questions</a>
-            <a href="http://127.0.0.1:8000/coach/">Answered Questions</a>
-            <a href="http://127.0.0.1:8000/coach/">Question Queue</a>
+            <form action="" method="post">
+                {% csrf_token %}
+                <button name="filter_queue" value="open">Open Questions</button>
+                <button name="filter_queue" value="answered">Answered Questions</button>
+                <button name="filter_queue" value="question-queue">Question Queue</button>
+            </form>
         </div>
 
         <table class="instr-table">

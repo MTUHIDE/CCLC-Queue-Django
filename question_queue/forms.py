@@ -39,6 +39,10 @@ class QuestionForm(forms.Form):
         fields = ("course", "question", "in_person")
 
 
+class FilterQueue(forms.Form):
+    filter_queue = forms.CharField()
+
+
 class AnswerForm(forms.Form):
     message = forms.CharField(
         label="Your Answer",

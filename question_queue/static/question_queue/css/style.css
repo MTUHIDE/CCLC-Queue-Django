@@ -40,9 +40,21 @@
   margin: auto;
 }
 
-.instr-page .filter a {
+.instr-page .filter button {
   padding-right: 1em;
   align-items: center;
+
+  /*Look like a link*/
+  background: none!important;
+  border: none;
+  /*optional*/
+  /*input has OS specific font-family*/
+  color: #007bff;
+  cursor: pointer;
+}
+
+.instr-page .filter button:hover {
+  text-decoration: underline;
 }
 
 .instr-table {
