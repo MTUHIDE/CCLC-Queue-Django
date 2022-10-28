@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 
-from .models import Question
+from .models import Question, QueueQuestion
 
 from .forms import QuestionForm, AnswerForm, FilterQueue
 
@@ -77,14 +77,21 @@ def coach(request):
 
     # Add all query'd data the table that will passed as context
     for question in questions:
+        # Should only ever be 1 or 0 because unique IDs
+        queueQuestion = QueueQuestion.objects.filter(id=question.id)
+        answeredBy = queueQuestion[0].answered_by.username if queueQuestion else None
         question_info = {
             "id": str(question.id),
             "name": question.asked_by.first_name,
             "class": question.course.name,
             "time": question.created_at.time,
             "message": question.message,
+            "hidden": question.hidden,
+            "answered": answeredBy,
         }
-        table_data.append(question_info)
+        print(QueueQuestion.objects.filter(id=question.id))
+        if not question_info["hidden"]:
+            table_data.append(question_info)
 
     context = {
         "question_queue": "",
@@ -98,19 +105,12 @@ def coach(request):
         if "filter_queue" in request.POST:
             queueFilter = FilterQueue(request.POST)
             if queueFilter.is_valid():
-                queueFilter = request.POST.get("filter_queue", "error")
-                if queueFilter == "open":
-                    # Return open questions
-                    return redirect("/coach/", context)
-                elif queueFilter == "answered":
-                    # Return answered questions
-                    return redirect("/coach/", context)
-                else:
-                    # Return all questions
-                    return redirect("/coach/", context)
+                queueFilterMode = request.POST.get("filter_queue", "error")
+                context["questions"] = filterHelper(table_data, queueFilterMode)
             else:
                 # Do something if request is dropped
-                return redirect("/coach/", context)
+                pass
+            return render(request, "question_queue/coach.html", context)
         print(request.POST.get("question", "error"))
         print(request.POST.get("replied_by", user))
         print(request.POST.get("message", "error"))
@@ -119,3 +119,15 @@ def coach(request):
         return redirect("/coach/", context)
 
     return render(request, "question_queue/coach.html", context)
+
+
+def filterHelper(questionQueue, mode):
+    if mode == "open":
+        # All unanswered questions
+        return [question for question in questionQueue if not question["answered"]]
+    elif mode == "answered":
+        # All answered questions
+        return [question for question in questionQueue if question["answered"]]
+    else:
+        # Just the normal queue
+        return questionQueue
