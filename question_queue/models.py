@@ -35,6 +35,9 @@ class Question(models.Model):
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     hidden = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ["created_at"]
+
 
 class QueueQuestion(Question):
     answered_by = models.ForeignKey(

@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 
-from .models import Question
+from .models import Question, QueueQuestion
 
 from .forms import QuestionForm, AnswerForm, FilterQueue
 
@@ -69,6 +69,7 @@ def instructor(request):
 
 
 def coach(request):
+    print("VIEW")
     user = "dannyshannon"
     questions = Question.objects.all()
 
@@ -83,6 +84,10 @@ def coach(request):
             "class": question.course.name,
             "time": question.created_at.time,
             "message": question.message,
+            "hidden": question.hidden,
+            "answer": QueueQuestion(question).answered_by.username
+            if QueueQuestion(question).answered_by is not None
+            else "",
         }
         table_data.append(question_info)
 
@@ -98,19 +103,12 @@ def coach(request):
         if "filter_queue" in request.POST:
             queueFilter = FilterQueue(request.POST)
             if queueFilter.is_valid():
-                queueFilter = request.POST.get("filter_queue", "error")
-                if queueFilter == "open":
-                    # Return open questions
-                    return redirect("/coach/", context)
-                elif queueFilter == "answered":
-                    # Return answered questions
-                    return redirect("/coach/", context)
-                else:
-                    # Return all questions
-                    return redirect("/coach/", context)
+                queueFilterMode = request.POST.get("filter_queue", "error")
+                context["questions"] = filterHelper(table_data, queueFilterMode)
             else:
                 # Do something if request is dropped
-                return redirect("/coach/", context)
+                pass
+            return render(request, "question_queue/coach.html", context)
         print(request.POST.get("question", "error"))
         print(request.POST.get("replied_by", user))
         print(request.POST.get("message", "error"))
@@ -119,3 +117,16 @@ def coach(request):
         return redirect("/coach/", context)
 
     return render(request, "question_queue/coach.html", context)
+
+
+# TODO: this.
+def filterHelper(questionQueue, mode):
+    if mode == "open":
+        # Do something interesting
+        return []
+    elif mode == "answered":
+        # Do something interesting
+        return []
+    else:
+        # Just the normal queue
+        return questionQueue
