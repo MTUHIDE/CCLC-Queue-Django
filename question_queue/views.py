@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.template import loader
 
 from .forms import AnswerForm, QuestionForm
-from .models import Question, QueueQuestion
+from .models import Question
 
 
 def index(response):
@@ -54,25 +54,7 @@ def instructor(request):
 def coach(request):
     user = "Super Coach"
 
-    # Initialize data to be
-    table_data = []
-
-    # Add all query'd data the table that will passed as context
-    for question in QueueQuestion.objects.filter(hidden=False):
-        attending=""
-        if question.attending:
-            attending = "table-primary"
-        question_info = {
-            "id": str(question.id),
-            "name": question.asked_by.first_name,
-            "class": question.course.name,
-            "time": question.created_at.time,
-            "message": question.message,
-            "attending": attending
-        }
-
     context = {
-        "questions": table_data,
         "user": user,
         "form": AnswerForm,
         "filter": "",
