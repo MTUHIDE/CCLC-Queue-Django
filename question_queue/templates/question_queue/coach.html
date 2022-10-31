@@ -32,7 +32,6 @@
         </div>
 
         <div id="queue-table">
-            {% include "./question_table.html" %}
         </div>
     </div>
 
@@ -51,7 +50,6 @@
             });
           });
         }
-        hookQueueEntries();
 
         const websocket = new WebSocket("ws://" + window.location.host + "/ws/coach/");
 

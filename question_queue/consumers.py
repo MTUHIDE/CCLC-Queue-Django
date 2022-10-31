@@ -25,6 +25,8 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
 
         self.user = self.scope["user"]
 
+        await self.channel_layer.send(self.channel_name, {"type": "html_message"})
+
     async def disconnect(self, close_code):
         pass
 
