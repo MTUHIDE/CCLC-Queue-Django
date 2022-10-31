@@ -54,13 +54,18 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
     def get_queue_questions(self):
         table_data = []
         for question in QueueQuestion.objects.filter(hidden=False):
+            attending=""
+            if (question.attending):
+                attending="table-primary"
             question_info = {
                 "id": str(question.id),
                 "name": question.asked_by.first_name,
                 "class": question.course.name,
                 "time": question.created_at,
                 "message": question.message,
+                "attending": attending
             }
+
             table_data.append(question_info)
         return table_data
 

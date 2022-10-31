@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         {% for question in questions %}
-            {% with question_id=question.id student_name=question.name class=question.class %}
+            {% with question_id=question.id student_name=question.name class=question.class attending=question.attending %}
                 {% with question_body=question.message time=question.time %}
                     {% include "./question_table_row.html" %}
                 {% endwith %}

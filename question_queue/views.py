@@ -59,14 +59,17 @@ def coach(request):
 
     # Add all query'd data the table that will passed as context
     for question in QueueQuestion.objects.filter(hidden=False):
+        attending=""
+        if question.attending:
+            attending = "table-primary"
         question_info = {
             "id": str(question.id),
             "name": question.asked_by.first_name,
             "class": question.course.name,
             "time": question.created_at.time,
             "message": question.message,
+            "attending": attending
         }
-        table_data.append(question_info)
 
     context = {
         "questions": table_data,
