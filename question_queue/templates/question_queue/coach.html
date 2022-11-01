@@ -42,15 +42,17 @@
             e.addEventListener("submit", (e) => {
               websocket.send(
                 JSON.stringify({
-                  question_id: e.target.id,
-                  action: e.submitter.name,
+                    action: e.submitter.name,
+                    args: {
+                        question_id: e.target.id,
+                    }
                 })
               );
               e.preventDefault();
             });
           });
         }
-        
+
         const websocket = new WebSocket("ws://" + window.location.host + "/ws/coach/");
 
         websocket.onmessage = (e) => {

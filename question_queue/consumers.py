@@ -40,25 +40,32 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive_json(self, content):
-        question_id = content["question_id"]
         action = content["action"]
+        args = content["args"]
 
-        await self.process_queue_action(question_id, action)
+        await self.process_queue_action(args, action)
 
         await self.channel_layer.group_send(
             self.COACH_GROUP_NAME, {"type": "html_message"}
         )
 
     @database_sync_to_async
-    def process_queue_action(self, question_id, action):
-        question = QueueQuestion.objects.get(id=question_id)
+    def process_queue_action(self, args, action):
         if action == "attending":
+            question = QueueQuestion.objects.get(id=args["question_id"])
             question.attending = not question.attending
+            question.save()
         elif action == "answered":
+            question = QueueQuestion.objects.get(id=args["question_id"])
             question.answered_by = self.user
+            question.save()
         elif action == "delete":
+            question = QueueQuestion.objects.get(id=args["question_id"])
             question.hidden = True
-        question.save()
+            question.save()
+        elif action == "create":
+            # TODO: Implement create action
+            pass
 
     @database_sync_to_async
     def get_queue_questions(self):
