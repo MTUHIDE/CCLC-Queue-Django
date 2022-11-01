@@ -17,11 +17,19 @@ class AsyncOrjsonWebsocketConsumer(AsyncJsonWebsocketConsumer):
 
 
 class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
-    GROUP_NAME = "queue_group"
+    COACH_GROUP_NAME = "coach_queue_group"
+    STUDENT_GROUP_NAME = "student_queue_group"
 
     async def connect(self):
+        stream = self.scope["url_route"]["kwargs"]["stream"]
+
         await self.accept()
-        await self.channel_layer.group_add(self.GROUP_NAME, self.channel_name)
+        if stream == "coach":
+            await self.channel_layer.group_add(self.COACH_GROUP_NAME, self.channel_name)
+        elif stream == "student":
+            await self.channel_layer.group_add(
+                self.STUDENT_GROUP_NAME, self.channel_name
+            )
 
         self.user = self.scope["user"]
 
@@ -37,7 +45,9 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
 
         await self.process_queue_action(question_id, action)
 
-        await self.channel_layer.group_send(self.GROUP_NAME, {"type": "html_message"})
+        await self.channel_layer.group_send(
+            self.COACH_GROUP_NAME, {"type": "html_message"}
+        )
 
     @database_sync_to_async
     def process_queue_action(self, question_id, action):
@@ -54,16 +64,16 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
     def get_queue_questions(self):
         table_data = []
         for question in QueueQuestion.objects.filter(hidden=False):
-            attending=""
-            if (question.attending):
-                attending="table-primary"
+            attending = ""
+            if question.attending:
+                attending = "table-primary"
             question_info = {
                 "id": str(question.id),
                 "name": question.asked_by.first_name,
                 "class": question.course.name,
                 "time": question.created_at,
                 "message": question.message,
-                "attending": attending
+                "attending": attending,
             }
 
             table_data.append(question_info)
