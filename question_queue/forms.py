@@ -43,6 +43,7 @@ class FilterQueue(forms.Form):
     filter_queue = forms.CharField()
 
 
+# Used by Coaches/Instructors
 class AnswerForm(forms.Form):
     message = forms.CharField(
         label="Your Answer",
@@ -60,3 +61,18 @@ class AnswerForm(forms.Form):
     class Meta:
         model = Reply
         fields = ("answer", "message")
+
+
+# Used by students (can't mark questions as answered)
+class ReplyForm(forms.Form):
+    message = forms.CharField(
+        label="Your Answer",
+        required=True,
+        widget=forms.Textarea(
+            attrs={"class": "form-control", "style": "height: 100px"}
+        ),
+    )
+
+    class Meta:
+        model = Reply
+        fields = "message"

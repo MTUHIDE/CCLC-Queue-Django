@@ -83,42 +83,40 @@ def coach(request):
     return render(request, "question_queue/coach.html", context)
 
 
-def forum(request, question_id=None):
+def forum(request):
     if request.method == "GET":
         user = "Little Student"
         table_data = grabQuestions()
 
-        # Question Forum
-        if question_id is None:
-            context = {
-                "question_id": None,
-                "questions": table_data,
-                "user": user,
-                "form": AnswerForm,
-                "filter": "",
-            }
-            return render(request, "question_queue/forum/forum.html", context)
-        # Question detailed view (replies, etc.)
-        else:
-            question_details = None
-            for q in table_data:
-                print(q["id"])
-                if q["id"] == str(question_id):
-                    question_details = q
-                    break
-            if question_details is None:
-                # TODO: Implement some error, quesiton not found.
-                pass
+        context = {
+            "questions": table_data,
+            "user": user,
+            "filter": None,
+        }
+        return render(request, "question_queue/forum/forum.html", context)
+    elif request.method == "POST":
+        return render(request, "question_queue/forum/forum.html", context)
 
-            context = {
-                "question": question_details,
-                "user": user,
-                "form": AnswerForm,
-                "filter": "",
-            }
-            return render(
-                request, "question_queue/forum/question_detailed.html", context
-            )
+
+def forumQuestion(request, question_id=None):
+    if request.method == "GET":
+        user = "Little Student"
+        table_data = grabQuestions()
+        question_details = None
+        for q in table_data:
+            print(q["id"])
+            if q["id"] == str(question_id):
+                question_details = q
+                break
+        if question_details is None:
+            return HttpResponse("<p style='color:red'>ERROR: Bad question ID</p>")
+
+        context = {
+            "question": question_details,
+            "user": user,
+            "form": None,
+        }
+        return render(request, "question_queue/forum/question_detailed.html", context)
     elif request.method == "POST":
         return render(request, "question_queue/forum/forum.html", context)
 
