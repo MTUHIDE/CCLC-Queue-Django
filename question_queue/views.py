@@ -118,7 +118,7 @@ def forumQuestion(request, question_id=None):
         }
         return render(request, "question_queue/forum/question_detailed.html", context)
     elif request.method == "POST":
-        return render(request, "question_queue/forum/forum.html", context)
+        return render(request, "question_queue/forum/question_detailed.html", context)
 
 
 def filterHelper(questionQueue, mode):
