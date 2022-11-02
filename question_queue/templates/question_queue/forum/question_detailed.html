@@ -34,8 +34,15 @@
 <body>
     <div class="instr-page">
         <br>
-        <h1>Question details page</h1>
-        <p>Question: {{question_id}}</p>
+        <h1>Question detailed page</h1>
+        <p>Question: {{question.message}}</p>
+        <ul>
+            <li>ID: {{ question.id }}</li>
+            <li>Asked by: {{ question.name }}</li>
+            <li>Course: {{ question.class }}</li>
+            <li>Created at: {{ question.time }}</li>
+            <li>Answered by: {{ question.answered }}</li>
+        </ul>
     </div>
 </body>
 </html>
