@@ -121,13 +121,21 @@ def coach(request):
     return render(request, "question_queue/coach.html", context)
 
 
-def forum(request):
-    user = "Little Student"
-    context = {
-        "user": user,
-    }
-
-    return render(request, "question_queue/forum.html", context)
+def forum(request, question_id=None):
+    if request.method == "GET":
+        user = "Little Student"
+        context = {
+            "user": user,
+        }
+        if question_id is None:
+            return render(request, "question_queue/forum/forum.html", context)
+        else:
+            context["question_id"] = question_id
+            return render(
+                request, "question_queue/forum/question_detailed.html", context
+            )
+    elif request.method == "POST":
+        return render(request, "question_queue/forum/forum.html", context)
 
 
 def filterHelper(questionQueue, mode):

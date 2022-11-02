@@ -7,4 +7,5 @@ urlpatterns = [
     path("instructor/", views.instructor, name="instructor view"),
     path("coach/", views.coach, name="coach view"),
     path("forum/", views.forum, name="forum view"),
+    path("forum/<int:question_id>/", views.forum, name="forum question view"),
 ]
