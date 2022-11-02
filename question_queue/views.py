@@ -121,6 +121,15 @@ def coach(request):
     return render(request, "question_queue/coach.html", context)
 
 
+def forum(request):
+    user = "Little Student"
+    context = {
+        "user": user,
+    }
+
+    return render(request, "question_queue/forum.html", context)
+
+
 def filterHelper(questionQueue, mode):
     if mode == "open":
         # All unanswered questions
