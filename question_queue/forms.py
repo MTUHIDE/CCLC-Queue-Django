@@ -1,5 +1,6 @@
 from django import forms
-from .models import Question, Reply, CanvasCourse
+
+from .models import CanvasCourse, Question, Reply
 
 LANGUAGE_CHOICES = (
     ("1", "Java"),
@@ -9,14 +10,14 @@ LANGUAGE_CHOICES = (
     ("5", "Rust"),
 )
 
-COURSE_CHOICES = [(course.id, course.name) for course in CanvasCourse.objects.all()]
+
+class NamedModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return f"{obj.name}"
 
 
 class QuestionForm(forms.Form):
-    course = forms.ChoiceField(
-        required=False,
-        choices=([(0, "")] + COURSE_CHOICES),
-    )
+    course = NamedModelChoiceField(required=False, queryset=CanvasCourse.objects.all())
     question = forms.CharField(
         required=True,
         max_length=100,
@@ -36,6 +37,10 @@ class QuestionForm(forms.Form):
     class Meta:
         model = Question
         fields = ("course", "question", "in_person")
+
+
+class FilterQueue(forms.Form):
+    filter_queue = forms.CharField()
 
 
 class AnswerForm(forms.Form):

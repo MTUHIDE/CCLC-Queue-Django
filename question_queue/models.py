@@ -7,12 +7,10 @@ class User(AbstractUser):
 
 
 class CanvasCourse(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.TextField()
 
 
 class Assignment(models.Model):
-    id = models.IntegerField(primary_key=True)
     course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
     name = models.TextField()
 
@@ -35,6 +33,16 @@ class Question(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     in_person = models.BooleanField(default=False)
     asked_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    hidden = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["created_at"]
+
+
+class QueueQuestion(Question):
+    answered_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True
+    )
 
 
 class Reply(models.Model):

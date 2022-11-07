@@ -87,25 +87,34 @@ thead {
 
 /*Queue Modal*/
 /* Modal Header */
-.modal-header {
+.in-queue-header {
+  font-size: 4rem;
   padding: 2px 16px;
-  background-color: #5cb85c;
+  background-color: #4d4d4d;
   color: white;
 }
 
 /* Modal Body */
-.modal-body {padding: 2px 16px;}
+.in_queue {
+  padding: 2px 16px;
+  text-align: center;
+  justify-content: center;
+}
 
 /* Modal Footer */
-.modal-footer {
+.in-queue-footer {
   padding: 2px 16px;
-  background-color: #5cb85c;
+  font-size: 1.25rem;
+  font-style: italic;
+  background-color: #4d4d4d;
   color: white;
 }
 
 /* Modal Content */
-.modal-content {
-  position: relative;
+.in-queue-content {
+  font-family: Mukta, sans-serif;
+  font-size: medium;
+  position: center;
   background-color: #fefefe;
   margin: auto;
   padding: 0;
@@ -116,8 +125,77 @@ thead {
   animation-duration: 0.4s
 }
 
+.in-queue-content p{
+  padding: 2px 16px;
+  font-size: 2rem;
+}
+
 /* Add Animation */
 @keyframes animatetop {
   from {top: -300px; opacity: 0}
   to {top: 0; opacity: 1}
+}
+
+.hidden {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+@media (prefers-color-scheme: dark){
+  body.dark-mode{
+    background: #1f1f1f;
+  }
+
+  .dark-mode .turn-light{
+    color: #cccccc;
+  }
+
+  .form-control{
+    background-color: #474747 !important;
+    border: none !important;
+    color: #cccccc !important;
+  }
+  .instr-table{
+    box-shadow: none;
+  }
+
+  .instr-table tr:nth-child(even){
+    background-color:#2d2d2d;
+    color:#cccccc;
+  }
+
+  .instr-table tr:nth-child(odd){
+    background-color:#222222;
+    color: #cccccc;
+  }
+
+  .instr-table tbody tr {
+    box-shadow: 0 0 2px #cccccc;
+  }
+
+  .instr-table tbody tr:hover{
+    background-color: #000000d2;
+  }
+
+  .instr-table .header{
+    background-color: #474747;
+    color: #cccccc;
+    box-shadow: none;
+  }
+
+  .modal-header{
+    background-color: #222222;
+    color: #cccccc;
+  }
+
+  .modal-body {
+    background-color: #222222;
+    color: #cccccc;
+  }
+
+  .modal-footer{
+    background-color: #222222;
+    color: #cccccc;
+  }
 }
