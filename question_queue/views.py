@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.template import loader
 
 from .forms import AnswerForm, QuestionForm
-from .models import Question
+from .models import Question, QueueQuestion
 
 
 def index(response):

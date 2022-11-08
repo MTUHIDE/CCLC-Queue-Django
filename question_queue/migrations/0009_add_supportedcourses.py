@@ -30,7 +30,7 @@ def remove_supportedcourses(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("question_queue", "0007_supportedcourse_name"),
+        ("question_queue", "0008_supportedcourse_name"),
     ]
 
     operations = [

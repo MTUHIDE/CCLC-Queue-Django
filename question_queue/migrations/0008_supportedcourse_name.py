@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("question_queue", "0006_alter_assignment_id_alter_canvascourse_id"),
+        ("question_queue", "0007_queuequestion_attending"),
     ]
 
     operations = [
