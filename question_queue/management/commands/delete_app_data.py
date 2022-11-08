@@ -4,7 +4,6 @@ from question_queue.models import (
     Assignment,
     Question,
     User,
-    CanvasCourse,
     Reply,
     QueueQuestion,
 )
@@ -18,7 +17,6 @@ class Command(BaseCommand):
         print("Deleting Fake Data...\n")
 
         user_list = User.objects.all().exclude(is_superuser=True)
-        course_list = CanvasCourse.objects.all()
         assignment_list = Assignment.objects.all()
         question_list = Question.objects.all()
         reply_list = Reply.objects.all()
@@ -33,9 +31,6 @@ class Command(BaseCommand):
 
         for m in user_list:
             m.delete()
-
-        for c in course_list:
-            c.delete()
 
         for a in assignment_list:
             a.delete()
