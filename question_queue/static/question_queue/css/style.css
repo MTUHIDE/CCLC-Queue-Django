@@ -95,64 +95,6 @@ thead {
   justify-content: center;
 }
 
-@media (prefers-color-scheme: dark){
-  body.dark-mode{
-    background: #1f1f1f;
-  }
-
-  .dark-mode .turn-light{
-    color: #cccccc;
-  }
-
-  .form-control{
-    background-color: #474747 !important;
-    border: none !important;
-    color: #cccccc !important;
-  }
-  .instr-table{
-    box-shadow: none;
-  }
-
-  .instr-table tr:nth-child(even){
-    background-color:#2d2d2d;
-    color:#cccccc;
-  }
-
-  .instr-table tr:nth-child(odd){
-    background-color:#222222;
-    color: #cccccc;
-  }
-
-  .instr-table tbody tr {
-    box-shadow: 0 0 2px #cccccc;
-  }
-
-  .instr-table tbody tr:hover{
-    background-color: #000000d2;
-  }
-
-  .instr-table .header{
-    background-color: #474747;
-    color: #cccccc;
-    box-shadow: none;
-  }
-
-  .modal-header{
-    background-color: #222222;
-    color: #cccccc;
-  }
-
-  .modal-body {
-    background-color: #222222;
-    color: #cccccc;
-  }
-
-  .modal-footer{
-    background-color: #222222;
-    color: #cccccc;
-  }
-}
-
 .hidden{
   opacity: 0;
   width: 0;
