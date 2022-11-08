@@ -6,18 +6,23 @@ class User(AbstractUser):
     pass
 
 
+class SupportedCourse(models.Model):
+    course_code = models.CharField(max_length=6, primary_key=True)
+    name = models.TextField(blank=True, null=True)
+
+
 class CanvasCourse(models.Model):
     name = models.TextField()
 
 
 class Assignment(models.Model):
-    course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
+    course = models.ForeignKey(SupportedCourse, on_delete=models.CASCADE)
     name = models.TextField()
 
 
 class EnrolledIn(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
+    course = models.ForeignKey(SupportedCourse, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Enrollment"
@@ -26,8 +31,8 @@ class EnrolledIn(models.Model):
 
 
 class Question(models.Model):
-    course = models.ForeignKey(CanvasCourse, on_delete=models.CASCADE)
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    course = models.ForeignKey(SupportedCourse, on_delete=models.CASCADE)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, null=True)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
@@ -55,8 +60,3 @@ class Reply(models.Model):
 
     class Meta:
         verbose_name_plural = "Replies"
-
-
-class SupportedCourse(models.Model):
-    course_code = models.CharField(max_length=6, primary_key=True)
-    name = models.TextField(blank=True, null=True)
