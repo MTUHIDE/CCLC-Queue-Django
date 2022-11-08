@@ -16,7 +16,6 @@ def index(response):
 def student(request):
     user = "Little Student"
     context = {
-        "question_queue": "",
         "user": user,
         "form": QuestionForm,
     }
@@ -34,24 +33,9 @@ def student(request):
 
 def instructor(request):
     user = "Dr.Professor"
-    questions = Question.objects.all()
-
-    # Initialize data to be
-    table_data = []
-
-    # Add all query'd data the table that will passed as context
-    for question in questions:
-        question_info = {
-            "id": str(question.id),
-            "name": question.asked_by.first_name,
-            "class": question.course.name,
-            "time": question.created_at.time,
-            "message": question.message,
-        }
-        table_data.append(question_info)
+    table_data = grabQuestions()
 
     context = {
-        "question_queue": "",
         "questions": table_data,
         "user": user,
         "form": AnswerForm,
@@ -70,31 +54,9 @@ def instructor(request):
 
 def coach(request):
     user = "dannyshannon"
-    questions = Question.objects.all()
-
-    # Initialize data to be
-    table_data = []
-
-    # Add all query'd data the table that will passed as context
-    for question in questions:
-        # Should only ever be 1 or 0 because unique IDs
-        queueQuestion = QueueQuestion.objects.filter(id=question.id)
-        answeredBy = queueQuestion[0].answered_by.username if queueQuestion else None
-        question_info = {
-            "id": str(question.id),
-            "name": question.asked_by.first_name,
-            "class": question.course.name,
-            "time": question.created_at.time,
-            "message": question.message,
-            "hidden": question.hidden,
-            "answered": answeredBy,
-        }
-        print(QueueQuestion.objects.filter(id=question.id))
-        if not question_info["hidden"]:
-            table_data.append(question_info)
+    table_data = grabQuestions()
 
     context = {
-        "question_queue": "",
         "questions": table_data,
         "user": user,
         "form": AnswerForm,
@@ -121,6 +83,44 @@ def coach(request):
     return render(request, "question_queue/coach.html", context)
 
 
+def forum(request):
+    if request.method == "GET":
+        user = "Little Student"
+        table_data = grabQuestions()
+
+        context = {
+            "questions": table_data,
+            "user": user,
+            "filter": None,
+        }
+        return render(request, "question_queue/forum/forum.html", context)
+    elif request.method == "POST":
+        return render(request, "question_queue/forum/forum.html", context)
+
+
+def forumQuestion(request, question_id=None):
+    if request.method == "GET":
+        user = "Little Student"
+        table_data = grabQuestions()
+        question_details = None
+        for q in table_data:
+            print(q["id"])
+            if q["id"] == str(question_id):
+                question_details = q
+                break
+        if question_details is None:
+            return HttpResponse("<p style='color:red'>ERROR: Bad question ID</p>")
+
+        context = {
+            "question": question_details,
+            "user": user,
+            "form": None,
+        }
+        return render(request, "question_queue/forum/question_detailed.html", context)
+    elif request.method == "POST":
+        return render(request, "question_queue/forum/question_detailed.html", context)
+
+
 def filterHelper(questionQueue, mode):
     if mode == "open":
         # All unanswered questions
@@ -131,3 +131,26 @@ def filterHelper(questionQueue, mode):
     else:
         # Just the normal queue
         return questionQueue
+
+
+def grabQuestions():
+    questions = Question.objects.all()
+    # Initialize data list
+    table_data = []
+    # Add all query'd data the table that will passed as context
+    for question in questions:
+        # Should only ever be 1 or 0 because unique IDs
+        queueQuestion = QueueQuestion.objects.filter(id=question.id)
+        answeredBy = queueQuestion[0].answered_by.username if queueQuestion else None
+        question_info = {
+            "id": str(question.id),
+            "name": question.asked_by.first_name,
+            "class": question.course.name,
+            "time": question.created_at.time,
+            "message": question.message,
+            "hidden": question.hidden,
+            "answered": answeredBy,
+        }
+        if not question_info["hidden"]:
+            table_data.append(question_info)
+    return table_data

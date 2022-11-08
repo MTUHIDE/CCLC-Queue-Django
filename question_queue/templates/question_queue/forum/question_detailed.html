@@ -1,0 +1,48 @@
+{{ forum }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}
+    <title>Forum</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load static %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'question_queue/css/style.css' %}" />
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'question_queue/css/style.css' %}" />
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" >
+</head>
+<body>
+    <div class="instr-page">
+        <br>
+        <h1>Question detailed page</h1>
+        <p>Question: {{question.message}}</p>
+        <ul>
+            <li>ID: {{ question.id }}</li>
+            <li>Asked by: {{ question.name }}</li>
+            <li>Course: {{ question.class }}</li>
+            <li>Created at: {{ question.time }}</li>
+            <li>Answered by: {{ question.answered }}</li>
+        </ul>
+    </div>
+</body>
+</html>
