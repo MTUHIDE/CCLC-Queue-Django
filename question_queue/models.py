@@ -59,3 +59,4 @@ class Reply(models.Model):
 
 class SupportedCourse(models.Model):
     course_code = models.CharField(max_length=6, primary_key=True)
+    name = models.TextField(blank=True, null=True)
