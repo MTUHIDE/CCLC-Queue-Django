@@ -13,13 +13,8 @@
             type="text/css"
             href="{% static 'question_queue/css/style.css' %}"
         />
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-            crossorigin="anonymous"
-        />
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" >
+        {% include "./bootstrap.html" %}
     </head>
     <body>
         <h1>CCLC Queue Site Index</h1>
