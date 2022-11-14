@@ -84,3 +84,21 @@ thead {
   border: none;
   border-bottom-color: #c7cdd1 !important
 }
+
+.cclc_butn{
+  color: white;
+  text-decoration: none;
+}
+.cc_div{
+  background-color: rgb(0, 153, 255);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+  width: 120px;
+}
+.cc_div:hover{
+  background-color: rgb(0, 132, 255);
+  color: white;
+}
