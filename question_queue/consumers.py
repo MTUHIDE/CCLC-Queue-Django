@@ -7,7 +7,7 @@ from django.db.models import F, Window
 from django.db.models.functions import window
 from django.template.loader import render_to_string
 
-from question_queue.models import QueueQuestion, SupportedCourse, User
+from question_queue.models import QueueQuestion, SupportedCourse
 
 
 class AsyncOrjsonWebsocketConsumer(AsyncJsonWebsocketConsumer):
@@ -27,9 +27,7 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
     async def connect(self):
         stream = self.scope["url_route"]["kwargs"]["stream"]
 
-        # TODO: Unhardcode user
-        # self.user = self.scope["user"]
-        self.user = await User.objects.aget(username="stephenwilliams")
+        self.user = self.scope["user"]
 
         await self.accept()
 
