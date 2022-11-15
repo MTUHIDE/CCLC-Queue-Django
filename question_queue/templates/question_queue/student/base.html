@@ -40,39 +40,22 @@
         <!-- Include row 2 -->
         {% include "./row2/component2.html" %}
     </div>
+
+    <!-- WebSocket Javascript -->
     <script>
-        {% comment %} var checkbox = document.getElementById("toggle-dark");
+        const websocket = new WebSocket("ws://" + window.location.host + "/ws/coach/");
 
-        //check storage if dark mode was on or off
-        if(sessionStorage.getItem("mode") == 'dark'){
-            darkmode();
-        } else{
-            nodark();
-        }
-
-        //if the checkbox is changed, run a function
-        checkbox.addEventListener("change", function(){
-            //check if the checkbox is checked
-            if(checkbox.checked){
-                darkmode();
-            } else {
-                nodark();
+        websocket.onmessage = (e) => {
+            const template = document.createElement("template");
+            template.innerHTML = e.data.trim();
+            for (const node of template.content.childNodes) {
+                document.getElementById(node.id).outerHTML = node.outerHTML;
             }
-        });
+        };
 
-        //function for checkbox when checkbox is checked
-        function darkmode(){
-            document.body.classList.add("dark-mode");
-            checkbox.checked = true;
-            sessionStorage.setItem("mode", "dark");
-        }
-
-        //function for when checkbox is not checked
-        function nodark(){
-            document.body.classList.remove("dark-mode");
-            checkbox.checked = false;
-            sessionStorage.setItem("mode", "light");
-        } {% endcomment %}
+        websocket.onclose = (e) => {
+            console.error("Socket closed unexpectedly");
+        };
     </script>
 </body>
 
