@@ -3,9 +3,11 @@ import asyncio
 import orjson
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from django.db.models import F, Window
+from django.db.models.functions import window
 from django.template.loader import render_to_string
 
-from question_queue.models import QueueQuestion
+from question_queue.models import QueueQuestion, SupportedCourse, User
 
 
 class AsyncOrjsonWebsocketConsumer(AsyncJsonWebsocketConsumer):
@@ -25,9 +27,12 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
     async def connect(self):
         stream = self.scope["url_route"]["kwargs"]["stream"]
 
-        self.user = self.scope["user"]
+        # TODO: Unhardcode user
+        # self.user = self.scope["user"]
+        self.user = await User.objects.aget(username="stephenwilliams")
 
         await self.accept()
+
         if stream == "coach":
             await self.channel_layer.group_add(self.COACH_GROUP_NAME, self.channel_name)
             await self.channel_layer.send(self.channel_name, {"type": "coach_message"})
@@ -73,13 +78,19 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
             question.hidden = True
             question.save()
         elif action == "create":
-            # TODO: Implement create action
-            pass
+            question = QueueQuestion(
+                course=SupportedCourse.objects.get(course_code=args["course"]),
+                message=args["message"],
+                asked_by=self.user,
+            )
+            question.save()
 
     @database_sync_to_async
     def get_queue_questions(self):
         table_data = []
-        for question in QueueQuestion.objects.filter(hidden=False):
+        for question in QueueQuestion.objects.filter(
+            hidden=False, answered_by__isnull=True
+        ):
             attending = ""
             if question.attending:
                 attending = "table-primary"
@@ -106,5 +117,37 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
             )
         )
 
+    @database_sync_to_async
+    def get_student_question(self):
+        return (
+            QueueQuestion.objects.filter(hidden=False, answered_by__isnull=True)
+            .annotate(
+                queue_position=Window(
+                    expression=window.RowNumber(),
+                    partition_by=[F("asked_by")],
+                    order_by="created_at",
+                )
+            )
+            .filter(asked_by=self.user)
+            .first()
+        )
+
     async def student_message(self, event):
-        pass
+        elements = []
+        question = await self.get_student_question()
+        elements.append(
+            render_to_string(
+                "question_queue/student/ask_question_btn.html",
+                {"disabled": question is not None},
+            ).rstrip()
+        )
+        index = -1
+        if question:
+            index = question.queue_position
+        elements.append(
+            render_to_string(
+                "question_queue/student/queue_position.html",
+                {"queue_position": index},
+            ).rstrip()
+        )
+        await self.send("".join(elements))

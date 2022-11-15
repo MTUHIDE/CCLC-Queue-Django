@@ -33,23 +33,44 @@
 
         <!-- Include row 1 -->
         {% include "./row1/component1.html" %}
+        <h1 class="turn-light">College of Computing Learning Center</h1>
 
         <!-- Ask a question -->
         {% include "./ask_a_question.html" %}
 
-        <!-- Include row 2 -->
-        {% include "./row2/component2.html" %}
+        <!-- Queue Position -->
+        <hr/>
+        <span id="queue-position"></span>
     </div>
+
+    <script>
+        const element = document.getElementById("ask-question-form");
+        element.addEventListener("submit", (e) => {
+            websocket.send(
+                JSON.stringify({
+                    action: "create",
+                    args: {
+                        course: document.getElementById("id_course").value,
+                        message: document.getElementById("id_question").value
+                    }
+                })
+            )
+            e.preventDefault()
+        });
+    </script>
 
     <!-- WebSocket Javascript -->
     <script>
-        const websocket = new WebSocket("ws://" + window.location.host + "/ws/coach/");
+        const websocket = new WebSocket("ws://" + window.location.host + "/ws/student/");
 
         websocket.onmessage = (e) => {
             const template = document.createElement("template");
             template.innerHTML = e.data.trim();
             for (const node of template.content.childNodes) {
-                document.getElementById(node.id).outerHTML = node.outerHTML;
+                const dom_node = document.getElementById(node.id);
+                if (dom_node){
+                    dom_node.outerHTML = node.outerHTML;
+                }
             }
         };
 

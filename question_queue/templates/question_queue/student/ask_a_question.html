@@ -1,15 +1,7 @@
 {% load crispy_forms_tags %}
-<h1 class="turn-light">College of Computing Learning Center</h1>
-
-<!-- <form method="GET">
-    {{ form }}
-    <input type="submit" value="Submit" />
-</form> -->
-
-
-<form class="row g-3 turn-light" method="POST">
+<form id="ask-question-form" class="row g-3 turn-light" method="POST">
+    {% csrf_token %}
     <div class="col-md-4">
-        {% csrf_token %}
         {{ form.course|as_crispy_field }}
     </div>
     <div class="col-md-8">
@@ -22,22 +14,6 @@
     </div>
 
     <div class="col-12">
-        <button id="submit btn" type="submit" class="btn btn btn-success">Ask Question!</button>
+        {% include "./ask_question_btn.html" %}
     </div>
 </form>
-
-<hr class="turn-light" />
-<script>
-    const element = document.getElementById("submit btn");
-    element.addEventListener("click", (e) => {
-        websocket.send(
-            JSON.stringify({
-                action: "create",
-                args: {
-                    course: document.getElementById("id_course").value,
-                    message: document.getElementById("id_question").value
-                }
-            })
-        )
-    });
-</script>
