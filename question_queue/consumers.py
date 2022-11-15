@@ -1,3 +1,5 @@
+import asyncio
+
 import orjson
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
@@ -23,17 +25,19 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
     async def connect(self):
         stream = self.scope["url_route"]["kwargs"]["stream"]
 
+        self.user = self.scope["user"]
+
         await self.accept()
         if stream == "coach":
             await self.channel_layer.group_add(self.COACH_GROUP_NAME, self.channel_name)
+            await self.channel_layer.send(self.channel_name, {"type": "coach_message"})
         elif stream == "student":
             await self.channel_layer.group_add(
                 self.STUDENT_GROUP_NAME, self.channel_name
             )
-
-        self.user = self.scope["user"]
-
-        await self.channel_layer.send(self.channel_name, {"type": "html_message"})
+            await self.channel_layer.send(
+                self.channel_name, {"type": "student_message"}
+            )
 
     async def disconnect(self, close_code):
         pass
@@ -45,8 +49,13 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
 
         await self.process_queue_action(args, action)
 
-        await self.channel_layer.group_send(
-            self.COACH_GROUP_NAME, {"type": "html_message"}
+        await asyncio.gather(
+            self.channel_layer.group_send(
+                self.COACH_GROUP_NAME, {"type": "coach_message"}
+            ),
+            self.channel_layer.group_send(
+                self.STUDENT_GROUP_NAME, {"type": "student_message"}
+            ),
         )
 
     @database_sync_to_async
@@ -87,15 +96,15 @@ class CoachLiveQueueConsumer(AsyncOrjsonWebsocketConsumer):
         return table_data
 
     # Receive message from room group
-    async def html_message(self, event):
+    async def coach_message(self, event):
         queue_questions = await self.get_queue_questions()
         # Send message to WebSocket
-        await self.send_json(
-            {
-                "element": "#queue-table",
-                "html": render_to_string(
-                    "question_queue/question_table.html",
-                    {"questions": queue_questions},
-                ),
-            }
+        await self.send(
+            render_to_string(
+                "question_queue/question_table.html",
+                {"questions": queue_questions},
+            )
         )
+
+    async def student_message(self, event):
+        pass

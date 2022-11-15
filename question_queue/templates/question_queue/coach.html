@@ -31,8 +31,8 @@
             </form>
         </div>
 
-        <div id="queue-table">
-        </div>
+        <table id="queue-table">
+        </table>
     </div>
 
     <!-- WebSocket Javascript -->
@@ -40,15 +40,15 @@
         function hookQueueEntries() {
             document.querySelectorAll(".queue-entry").forEach((e) => {
             e.addEventListener("submit", (e) => {
-              websocket.send(
-                JSON.stringify({
-                    action: e.submitter.name,
-                    args: {
-                        question_id: e.target.id,
-                    }
-                })
-              );
-              e.preventDefault();
+                websocket.send(
+                    JSON.stringify({
+                        action: e.submitter.name,
+                        args: {
+                            question_id: e.target.id,
+                        }
+                    })
+                );
+                e.preventDefault();
             });
           });
         }
@@ -56,9 +56,12 @@
         const websocket = new WebSocket("ws://" + window.location.host + "/ws/coach/");
 
         websocket.onmessage = (e) => {
-          const data = JSON.parse(e.data);
-          document.querySelector(data.element).innerHTML = data.html;
-          hookQueueEntries();
+            const template = document.createElement("template");
+            template.innerHTML = e.data.trim();
+            for (const node of template.content.childNodes) {
+                document.getElementById(node.id).outerHTML = node.outerHTML;
+            }
+            hookQueueEntries();
         };
 
         websocket.onclose = (e) => {
