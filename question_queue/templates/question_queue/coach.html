@@ -59,7 +59,10 @@
             const template = document.createElement("template");
             template.innerHTML = e.data.trim();
             for (const node of template.content.childNodes) {
-                document.getElementById(node.id).outerHTML = node.outerHTML;
+                const dom_node = document.getElementById(node.id);
+                if (dom_node){
+                    dom_node.outerHTML = node.outerHTML;
+                }
             }
             hookQueueEntries();
         };
