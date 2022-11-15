@@ -84,4 +84,4 @@ class QueueQuestionFactory(QuestionFactory):
     class Meta:
         model = QueueQuestion
 
-    answered_by = factory.SubFactory(UserFactory)
+    answered_by = None 
