@@ -43,6 +43,8 @@
 .instr-page .filter a {
   padding-right: 1em;
   align-items: center;
+  display: flex;
+  flex-direction: row
 }
 
 .instr-table {
