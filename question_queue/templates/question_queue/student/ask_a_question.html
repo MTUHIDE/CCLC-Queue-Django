@@ -22,8 +22,19 @@
     </div>
 
     <div class="col-12">
-        <button type="submit" class="btn btn btn-success">Ask Question!</button>
+        <button type="submit" class="btn btn btn-success" onclick="DisplayMenu()">Ask Question!</button>
     </div>
 </form>
+<script>
+    function DisplayMenu(obj) {
+        var obj = document.getElementByClassName("hidden");
+                if (obj.style.visibility == 'visible') {
+                    obj.style.visibility = 'hidden';
+                }
+                else {
+                    obj.style.visibility = 'visible';
+                }
+            }
+</script>
 
-<hr class="turn-light" />
+<hr/>
