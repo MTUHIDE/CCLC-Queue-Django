@@ -95,7 +95,7 @@ def forum(request):
         }
         return render(request, "question_queue/forum/forum.html", context)
     elif request.method == "POST":
-        return render(request, "question_queue/forum/forum.html", context)
+        return render(request, "question_queue/forum/forum.html")
 
 
 def forumQuestion(request, question_id=None):
@@ -104,9 +104,8 @@ def forumQuestion(request, question_id=None):
         table_data = grabQuestions()
         question_details = None
         for q in table_data:
-            print(q["id"])
-            if q["id"] == str(question_id):
-                question_details = q
+            question_details = q if q["id"] == str(question_id) else None
+            if question_details:
                 break
         if question_details is None:
             return HttpResponse("<p style='color:red'>ERROR: Bad question ID</p>")
@@ -118,7 +117,7 @@ def forumQuestion(request, question_id=None):
         }
         return render(request, "question_queue/forum/question_detailed.html", context)
     elif request.method == "POST":
-        return render(request, "question_queue/forum/question_detailed.html", context)
+        return render(request, "question_queue/forum/question_detailed.html")
 
 
 def filterHelper(questionQueue, mode):
