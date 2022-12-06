@@ -28,7 +28,7 @@ def student(request):
         # This return makes it so we don't get new POSTs on refresh
         return redirect("/student", context)
 
-    return render(request, "question_queue/student/student.html", context)
+    return render(request, "question_queue/student.html", context)
 
 
 def instructor(request):

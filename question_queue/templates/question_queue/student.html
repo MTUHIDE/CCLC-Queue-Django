@@ -1,0 +1,70 @@
+{{ student }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}
+    <title>Student</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'question_queue/css/style.css' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" >
+    {% include "./bootstrap.html" %}
+</head>
+
+<body id="body">
+    <header>
+        <label class="toggle-dark hidden">
+            <input type="checkbox" id="toggle-dark hidden" />
+            <span class="slider">
+        </label>
+    </header>
+
+    <div class="container">
+        <br />
+        <div class="m-2 d-flex flex-row rounded">
+            <div class="m-2 turn-light">
+                <spam style="color: #0285ce; text-decoration: underline">Ask A Question:</spam>
+                Be detailed in your description of the problem. Your Instructor,
+                Teaching Assistant, or a CCLC Coach will respond as quickly as possible.
+            </div>
+
+        </div>
+
+        <!-- Ask a question -->
+        {% load crispy_forms_tags %}
+        <h1 class="turn-light">College of Computing Learning Center</h1>
+
+        <form class="row g-3 turn-light" method="POST">
+            <div class="col-md-4">
+                {% csrf_token %}
+                {{ form.course|as_crispy_field }}
+            </div>
+            <div class="col-md-8">
+                </br>
+            <!-- {{ form.in_person|as_crispy_field }} -->
+            </div>
+            <input type="hidden" name="replied_by" value="{{ user }}">
+            <div class="col-12">
+                {{ form.question|as_crispy_field }}
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">Ask Question!</button>
+            </div>
+        </form>
+
+        <hr class="turn-light" />
+
+        <!-- Include row 2 -->
+        <div class="questions_content" class="col-xs-12 col-sm-8">
+            <br />
+        </div>
+
+
+    </div>
+
+</body>
+</html>
