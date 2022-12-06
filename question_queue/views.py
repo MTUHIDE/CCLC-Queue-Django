@@ -26,6 +26,7 @@ def student(request):
         print(request.POST.get("asked_by", user))
         print(request.POST.get("question", "error"))
         print(request.POST.get("in_person", "off"))
+        render("question_queue/student/alert.html")
         # This return makes it so we don't get new POSTs on refresh
         return redirect("/student", context)
 
