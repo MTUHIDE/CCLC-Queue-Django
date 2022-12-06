@@ -31,39 +31,45 @@
             </form>
         </div>
 
-        <table class="instr-table">
-            <colgroup>
-                <col span="1" style="width: 5%" />
-                <col span="1" style="width: 10%" />
-                <col span="1" style="width: 10%" />
-                <col span="1" style="width: 70%" />
-                <col span="1" style="width: 5%" />
-            </colgroup>
-            <thead>
-                <tr class="header"
-                    data-href="http://127.0.0.1:8000/coach/">
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Course</th>
-                    <th scope="col">Question</th>
-                    <th scope="col">Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for question in questions %}
-                {% with "#Row"|add:question.id|add:"Modal" as modalID %}
-                {% with page="http://127.0.0.1:8000/coach/" modal_id=modalID %}
-                {% with question_id=question.id student_name=question.name class=question.class %}
-                {% with question_body=question.message time=question.time %}
-                {% with "Row"|add:question.id|add:"Modal" as modalID %}
-                {% include "./question_modal.html" with id=modalID name=question.name question_body=question.message user=user question=question.id %}
-                {% include "./question_table_row.html" %}
-                {% endwith %} {% endwith %} {% endwith %} {% endwith %} {% endwith %}
-                {% endfor %}
-            </tbody>
+        <table id="queue-table">
         </table>
     </div>
 
+    <!-- WebSocket Javascript -->
+    <script>
+        function hookQueueEntries() {
+            document.querySelectorAll(".queue-entry").forEach((e) => {
+            e.addEventListener("submit", (e) => {
+                websocket.send(
+                    JSON.stringify({
+                        action: e.submitter.name,
+                        args: {
+                            question_id: e.target.id,
+                        }
+                    })
+                );
+                e.preventDefault();
+            });
+          });
+        }
 
+        const websocket = new WebSocket("ws://" + window.location.host + "/ws/coach/");
+
+        websocket.onmessage = (e) => {
+            const template = document.createElement("template");
+            template.innerHTML = e.data.trim();
+            for (const node of template.content.childNodes) {
+                const dom_node = document.getElementById(node.id);
+                if (dom_node){
+                    dom_node.outerHTML = node.outerHTML;
+                }
+            }
+            hookQueueEntries();
+        };
+
+        websocket.onclose = (e) => {
+          console.error("Socket closed unexpectedly");
+        };
+      </script>
 </body>
 </html>

@@ -37,6 +37,11 @@ class QuestionAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"
 
 
+@admin.register(QueueQuestion)
+class QueueQuestionAdmin(admin.ModelAdmin):
+    date_hierarchy = "created_at"
+
+
 @admin.register(Reply)
 class ReplyAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"
@@ -44,9 +49,4 @@ class ReplyAdmin(admin.ModelAdmin):
 
 @admin.register(SupportedCourse)
 class SupportedCourseAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(QueueQuestion)
-class QueueQuestionAdmin(admin.ModelAdmin):
     pass

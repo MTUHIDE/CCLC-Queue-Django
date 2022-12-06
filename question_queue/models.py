@@ -48,6 +48,7 @@ class QueueQuestion(Question):
     answered_by = models.ForeignKey(
         User, on_delete=models.CASCADE, blank=True, null=True
     )
+    attending = models.BooleanField(default=False)
 
 
 class Reply(models.Model):

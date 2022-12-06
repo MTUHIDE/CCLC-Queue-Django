@@ -78,7 +78,7 @@
 
 .instr-table tbody tr:hover {background-color: #e5f2f8;}
 
-thead {
+.instr-table thead {
   box-shadow: 0 5px 10px #e1e5ee;
 }
 

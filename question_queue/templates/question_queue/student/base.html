@@ -33,46 +33,50 @@
 
         <!-- Include row 1 -->
         {% include "./row1/component1.html" %}
+        <h1 class="turn-light">College of Computing Learning Center</h1>
 
         <!-- Ask a question -->
         {% include "./ask_a_question.html" %}
 
-        <!-- Include row 2 -->
-        {% include "./row2/component2.html" %}
+        <!-- Queue Position -->
+        <hr/>
+        <span id="queue-position"></span>
     </div>
+
     <script>
-        {% comment %} var checkbox = document.getElementById("toggle-dark");
-
-        //check storage if dark mode was on or off
-        if(sessionStorage.getItem("mode") == 'dark'){
-            darkmode();
-        } else{
-            nodark();
-        }
-
-        //if the checkbox is changed, run a function
-        checkbox.addEventListener("change", function(){
-            //check if the checkbox is checked
-            if(checkbox.checked){
-                darkmode();
-            } else {
-                nodark();
-            }
+        const element = document.getElementById("ask-question-form");
+        element.addEventListener("submit", (e) => {
+            websocket.send(
+                JSON.stringify({
+                    action: "create",
+                    args: {
+                        course: document.getElementById("id_course").value,
+                        message: document.getElementById("id_question").value
+                    }
+                })
+            )
+            e.preventDefault()
         });
+    </script>
 
-        //function for checkbox when checkbox is checked
-        function darkmode(){
-            document.body.classList.add("dark-mode");
-            checkbox.checked = true;
-            sessionStorage.setItem("mode", "dark");
-        }
+    <!-- WebSocket Javascript -->
+    <script>
+        const websocket = new WebSocket("ws://" + window.location.host + "/ws/student/");
 
-        //function for when checkbox is not checked
-        function nodark(){
-            document.body.classList.remove("dark-mode");
-            checkbox.checked = false;
-            sessionStorage.setItem("mode", "light");
-        } {% endcomment %}
+        websocket.onmessage = (e) => {
+            const template = document.createElement("template");
+            template.innerHTML = e.data.trim();
+            for (const node of template.content.childNodes) {
+                const dom_node = document.getElementById(node.id);
+                if (dom_node){
+                    dom_node.outerHTML = node.outerHTML;
+                }
+            }
+        };
+
+        websocket.onclose = (e) => {
+            console.error("Socket closed unexpectedly");
+        };
     </script>
 </body>
 

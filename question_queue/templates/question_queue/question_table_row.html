@@ -1,7 +1,13 @@
-<tr data-href="{{page}}" data-toggle="modal" data-target="{{modal_id}}">
+<form id="{{question_id}}" class="queue-entry"></form>
+<tr class="{{attending}}">
     <td scope="row">{{question_id}}</td>
     <td>{{student_name}}</td>
     <td>{{class}}</td>
     <td>{{question_body}}</td>
     <td>{{time}}</td>
+    <td>
+        <input type="submit" name="attending" value="Attending" form="{{question_id}}" class="btn btn-primary"></input>
+        <input type="submit" name="answered" value="Answered" form="{{question_id}}" class="btn btn-success"></input>
+        <input type="submit" name="delete" value="Delete" form="{{question_id}}" class="btn btn-danger"></input>
+    </td>
 </tr>
