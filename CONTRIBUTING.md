@@ -35,6 +35,19 @@ poetry run pre-commit install
 
 This ensures the correct checks are run when you go to make a commit.
 
-### 4. Finished
+### 4. Setting up Docker
+
+If you are running Windows you will first need to install WSL. To install WSL
+follow Microsoft's guide [here](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+To install Docker navigate [here](https://www.docker.com/products/docker-desktop/) to install Docker Desktop
+
+Run the Docker Desktop installer to finish the installation.
+
+To run docker navigate to the project directory and run `docker compose up -d` to start the required docker services.
+
+To stop the running docker services run `docker compose stop` in the project.
+
+### 5. Finished
 
 You are now all set up and ready to develop!
