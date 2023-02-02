@@ -24,7 +24,7 @@ class QuestionForm(forms.Form):
         required=True,
         max_length=100,
         widget=forms.Textarea(
-            attrs={"class": "form-control", "style": "height: 100px", "placeholder" : "Write your question here..."}
+            attrs={"class": "form-control", "style": "height: 100px", "placeholder" : "Provide as much relevant detail as possible"}
         ),
     )
     in_person = forms.BooleanField(
