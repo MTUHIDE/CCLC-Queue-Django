@@ -18,12 +18,16 @@
         {% include "./bootstrap.html" %}
     </head>
     <body>
-        <div class="instr-page" align ="center">
+        <div class="instr-page">
+            <br>
             <h1 class="turn-light">Welcome, {{user}}, to the Instructor page</h1>
             <div class="filter" style="display: flex; flex-direction: row">
-                <a href="http://127.0.0.1:8000/instructor/">Open Questions</a>
-                <a href="http://127.0.0.1:8000/instructor/">Answered Questions</a>
-                <a href="http://127.0.0.1:8000/instructor/">Question Queue</a>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="button" onclick="window.location.href='http://127.0.0.1:8000/instructor/';" name="filter_queue" value= "Open Questions"/>
+                    <input type="button"  onclick="window.location.href='http://127.0.0.1:8000/instructor/';" name="filter_queue" value="Answered Questions"/>
+                    <input type="button" onclick="window.location.href='http://127.0.0.1:8000/instructor/';" name="filter_queue" value="Question Queue"/>
+                </form>
             </div>
 
             <table class="instr-table">
