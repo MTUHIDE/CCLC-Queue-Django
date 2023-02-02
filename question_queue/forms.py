@@ -18,13 +18,13 @@ class SupportedCourseChoiceField(forms.ModelChoiceField):
 
 class QuestionForm(forms.Form):
     course = SupportedCourseChoiceField(
-        queryset=SupportedCourse.objects.all(), required=True
+        queryset=SupportedCourse.objects.all(), required=True, empty_label="Select course"
     )
     question = forms.CharField(
         required=True,
         max_length=100,
         widget=forms.Textarea(
-            attrs={"class": "form-control", "style": "height: 100px"}
+            attrs={"class": "form-control", "style": "height: 100px", "placeholder" : "Write your question here..."}
         ),
     )
     in_person = forms.BooleanField(
