@@ -25,9 +25,9 @@
         <div class="filter" style="display: flex; flex-direction: row">
             <form action="" method="post">
                 {% csrf_token %}
-                <button name="filter_queue" value="open">Open Questions</button>
-                <button name="filter_queue" value="answered">Answered Questions</button>
-                <button name="filter_queue" value="question-queue">Question Queue</button>
+                <input type="button" onclick="window.location.href='http://127.0.0.1:8000/coach/';" name="filter_queue" value= "Open Questions"/>
+                <input type="button"  onclick="window.location.href='http://127.0.0.1:8000/coach/';" name="filter_queue" value="Answered Questions"/>
+                <input type="button" onclick="window.location.href='http://127.0.0.1:8000/coach/';" name="filter_queue" value="Question Queue"/>
             </form>
         </div>
 
