@@ -60,3 +60,7 @@ class Reply(models.Model):
 
     class Meta:
         verbose_name_plural = "Replies"
+
+
+class Language(models.Model):
+    language_name = models.CharField(max_length=10, unique=True)
