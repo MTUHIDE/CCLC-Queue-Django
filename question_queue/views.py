@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 
-from .models import Question, QueueQuestion
+from .models import Question, QueueQuestion, SupportedCourse, User
 
 from .forms import QuestionForm, AnswerForm, FilterQueue
 
@@ -14,13 +14,33 @@ def index(response):
 
 
 def student(request):
-    user = "Little Student"
+    # local database name, change once user authentication is added
+    user = User.objects.get(username="john")
     context = {
         "user": user,
         "form": QuestionForm,
     }
 
     if request.method == "POST":
+        course = request.POST.get("course", "error")
+        # asked_by = request.POST.get("asked_by", user)
+        question = request.POST.get("question", "error")
+        in_person = request.POST.get("in_person", "off")
+
+        if in_person == "on":
+            in_person = True
+        else:
+            in_person = False
+
+        new_question = Question(
+            course=SupportedCourse.objects.get(course_code=course),
+            message=question,
+            asked_by=user,
+            in_person=in_person,
+        )
+
+        new_question.save()
+
         print(request.POST.get("course", "error"))
         print(request.POST.get("asked_by", user))
         print(request.POST.get("question", "error"))
