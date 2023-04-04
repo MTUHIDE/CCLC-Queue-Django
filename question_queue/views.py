@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Question, QueueQuestion, SupportedCourse, User
 
@@ -15,8 +16,8 @@ def index(response):
 
 
 def student(request):
-    # local database name, change once user authentication is added
-    user = User.objects.get(username="john")
+    user = "john"
+
     context = {
         "user": user,
         "form": QuestionForm,
@@ -24,7 +25,6 @@ def student(request):
 
     if request.method == "POST":
         course = request.POST.get("course", "error")
-        # asked_by = request.POST.get("asked_by", user)
         question = request.POST.get("question", "error")
         in_person = request.POST.get("in_person", "off")
 
@@ -33,21 +33,25 @@ def student(request):
         else:
             in_person = False
 
-        new_question = Question(
-            course=SupportedCourse.objects.get(course_code=course),
-            message=question,
-            asked_by=user,
-            in_person=in_person,
-        )
+        try:
+            # local database name, change once user authentication is added
+            user = User.objects.get(username="john")
 
-        new_question.save()
+            new_question = Question(
+                course=SupportedCourse.objects.get(course_code=course),
+                message=question,
+                asked_by=user,
+                in_person=in_person,
+            )
 
-        print(request.POST.get("course", "error"))
-        print(request.POST.get("asked_by", user))
-        print(request.POST.get("question", "error"))
-        print(request.POST.get("in_person", "off"))
+            new_question.save()
+            messages.success(request, "Question submitted!")
 
-        messages.success(request, "Question submitted!")
+        except (ValueError, ObjectDoesNotExist):
+            print(request.POST.get("course", "error"))
+            print(request.POST.get("asked_by", user))
+            print(request.POST.get("question", "error"))
+            print(request.POST.get("in_person", "off"))
 
         # This return makes it so we don't get new POSTs on refresh
         return redirect("/student", context)
