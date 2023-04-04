@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .models import Question, QueueQuestion, SupportedCourse, User
 
@@ -45,6 +46,9 @@ def student(request):
         print(request.POST.get("asked_by", user))
         print(request.POST.get("question", "error"))
         print(request.POST.get("in_person", "off"))
+
+        messages.success(request, "Question submitted!")
+
         # This return makes it so we don't get new POSTs on refresh
         return redirect("/student", context)
 
