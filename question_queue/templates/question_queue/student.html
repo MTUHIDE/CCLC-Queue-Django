@@ -47,7 +47,17 @@
         </label>
     </header>
 
+    {% for message in messages %}
+    <div class="container-fluid p-0">
+      <div class="alert alert-success alert-dismissible" role="alert" >
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    {% endfor %}
+
     <div class="container">
+
         <br />
         <div class="m-2 d-flex flex-row rounded">
             <div class="m-2 turn-light">
