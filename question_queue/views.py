@@ -2,8 +2,9 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Question, QueueQuestion
+from .models import Question, QueueQuestion, SupportedCourse, User
 
 from .forms import QuestionForm, AnswerForm, FilterQueue
 
@@ -15,19 +16,42 @@ def index(response):
 
 
 def student(request):
-    user = "Little Student"
+    user = "john"
+
     context = {
         "user": user,
         "form": QuestionForm,
     }
 
     if request.method == "POST":
-        print(request.POST.get("course", "error"))
-        print(request.POST.get("asked_by", user))
-        print(request.POST.get("question", "error"))
-        print(request.POST.get("in_person", "off"))
+        course = request.POST.get("course", "error")
+        question = request.POST.get("question", "error")
+        in_person = request.POST.get("in_person", "off")
 
-        messages.success(request, "Question submitted!")
+        if in_person == "on":
+            in_person = True
+        else:
+            in_person = False
+
+        try:
+            # local database name, change once user authentication is added
+            user = User.objects.get(username="john")
+
+            new_question = Question(
+                course=SupportedCourse.objects.get(course_code=course),
+                message=question,
+                asked_by=user,
+                in_person=in_person,
+            )
+
+            new_question.save()
+            messages.success(request, "Question submitted!")
+
+        except (ValueError, ObjectDoesNotExist):
+            print(request.POST.get("course", "error"))
+            print(request.POST.get("asked_by", user))
+            print(request.POST.get("question", "error"))
+            print(request.POST.get("in_person", "off"))
 
         # This return makes it so we don't get new POSTs on refresh
         return redirect("/student", context)
